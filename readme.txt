@@ -15,7 +15,9 @@
 4. github에서 pull requests -> merge
 5. git pull origin main (최종 브랜치)
 
-=====================실제 서버에 배포=====================
-1. npm run build
-2. firebase deploy
+=====================firebase 로컬 확인=====================
+1. firebase serve
+
+=====================firebase 서버 업로드=====================
+1. firebase deploy
 
