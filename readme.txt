@@ -5,8 +5,8 @@
 5. firebase login
 6. firebase init
 <!-- // firebase -->
-=====================로컬 실행=====================
-1. npm run dev
+=====================firebase 로컬 실행=====================
+1. firebase serve
 
 =====================git 업로드=====================
 1. git add .
@@ -14,9 +14,6 @@
 3. git push -u origin develop (본인 브랜치)
 4. github에서 pull requests -> merge
 5. git pull origin main (최종 브랜치)
-
-=====================firebase 로컬 확인=====================
-1. firebase serve
 
 =====================firebase 서버 업로드=====================
 1. firebase deploy

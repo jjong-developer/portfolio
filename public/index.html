@@ -8,19 +8,550 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="포트폴리오 소개 사이트">
     <meta property="og:description" content="쫑dev님의 포트폴리오 소개 사이트입니다.">
-    <meta property="og:url" content="https://jjong-developer.github.io/">
-    <meta property="og:image" content="https://jjong-developer.github.io/og_image.png">
+    <meta property="og:url" content="https://jjong-portfolio.web.app/">
+    <meta property="og:image" content="https://jjong-portfolio.web.app/og_image.png">
     <title>포트폴리오 소개 사이트</title>
 
-    <link rel="shortcut icon" href="./images/favicon.png">
+    <link rel="shortcut icon" href="images/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
-    <link rel="stylesheet" href="./css/style.css"> <!-- 통합 style -->
-    <link rel="stylesheet" href="./css/responsive.css"> <!-- 통합 반응형 style -->
+    <link rel="stylesheet" href="css/style.css"> <!-- 통합 style -->
+    <link rel="stylesheet" href="css/responsive.css"> <!-- 통합 반응형 style -->
 </head>
 
 <body>
-<div>test5</div>
+<!-- header gnb menu -->
+<header class="header">
+    <div id="nameView" class="information-view"></div>
+    <nav class="nav">
+        <div class="logo">
+            <a href="./">쫑</a>
+        </div>
+        <ul class="menu">
+            <li data-offset="#about">about</li>
+            <li data-offset="#portfolio">portfolio sites</li>
+            <li data-offset="#skill">use skills</li>
+            <li class="sign-in-out">
+                <button id="signInOutBtn" type="button">sign in</button>
+            </li>
+        </ul>
+        <!-- 모바일 메뉴 버튼 -->
+        <button id="mobileMenuBtn" class="mobile-menu-btn" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 4h18v2H3V4zm6 7h12v2H9v-2zm-6 7h18v2H3v-2z" fill="rgba(255,255,255,1)"/></svg>
+        </button>
+    </nav>
+</header>
+
+<!-- about section -->
+<div id="aboutBg">
+    <section id="about" class="section section-pdt">
+        <div class="about ide-style">
+            <div class="json-type-1">
+                <h2 class="title" data-offset="#about">
+                    <span>about</span>
+                    <strong>{</strong>
+                </h2>
+                <dl>
+                    <div class="sub-title-wrap">
+                        <h2 class="sub-title">김종욱님의 소개를 봐주세요.</h2>
+                    </div>
+
+                    <!-- 자기 소개 -->
+                    <dt>
+                        <span>profile</span>
+                        <strong>{</strong>
+                    </dt>
+                    <dd>
+                        <div class="json-type-2">
+                            <div class="about-content">
+                                <ul>
+                                    <li>
+                                        <span>introduce</span>
+                                        <div>
+                                            <p>SEO 검색엔진 최적화에 특화된 6년차 개발자입니다.</p>
+                                            <br>
+                                            <p>초기 스타트업에서 웹 사이트 서비스를 개발, 운영, 유지보수하며 주로 웹 서비스 개발과 유지보수를 담당했습니다. 필요에 따라 PO(Product Owner) 역할도 겸하며 다양한 업무를 수행했습니다.</p>
+                                            <br>
+                                            <p>새로운 기술을 꾸준히 배우고 익히는 데 두려움이 없다는 점이 제 강점이라고 생각합니다. 또한, 남들에게 쉽게 설명할 수 있는 지식이 진정한 제 지식이라 믿습니다. 이전 직장에서 배운 지식을 문서화하여 팀원들과 리뷰하고 공유하는 습관을 들였고, 이를 통해 개발 시 UX 분석, 기능 정의서 작성, 컴포넌트 설계 등 미리 설계하는 습관을 기르게 되었습니다.</p>
+                                            <br>
+                                            <p>저는 혼자만의 성장이 아닌, 동료들과 함께 성장하는 것이 진정한 의미의 성장이라고 생각합니다. 선한 영향력을 미칠 수 있도록 꾸준히 동료들과 소통하고 지식을 공유하며, 함께 발전해 나가고 싶습니다.</p>
+                                            <!-- 익힌 기술에 대해서는 프로젝트에 적용을 해보고 써보면서 느낀점들을 블로그에 정리합니다. -->
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>Contact</span>
+                                        <div>
+                                            <div class="about-defalut-content">
+                                                <p class="title">이메일</p>
+                                                <p>
+                                                    <span class="icon-check"></span>
+                                                    <a href="mailto:jongwook2.kim@gmail.com">jongwook2.kim@gmail.com</a>
+                                                </p>
+                                            </div>
+                                            <div class="about-defalut-content">
+                                                <p class="title">연락처</p>
+                                                <p>
+                                                    <span class="icon-check"></span>
+                                                    <a href="tel:010-6595-2468">010-6595-2468</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>education</span>
+                                        <div>
+                                            <div class="about-defalut-content">
+                                                <p class="title">학력</p>
+                                                <p>
+                                                    <span class="icon-check"></span>
+                                                    청주대학교 컴퓨터정보공학과 졸업 (2013.03 ~ 2019.02)
+                                                </p>
+                                            </div>
+                                            <div class="about-defalut-content">
+                                                <p class="title">병역</p>
+                                                <p>
+                                                    <span class="icon-check"></span>
+                                                    육군 병장 만기전역 (2014.03 ~ 2015.12)
+                                                </p>
+                                            </div>
+                                            <div class="about-defalut-content">
+                                                <p class="title">그린컴퓨터아카데미 신촌점</p>
+                                                <p>
+                                                    <span class="icon-check"></span>
+                                                    스마트형 웹 콘텐츠 양성과정 수료 (2018.06 ~ 2018.12)
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span>channel</span>
+                                        <div>
+                                            <div class="about-defalut-content">
+                                                <a href="https://github.com/jjong-developer" target="_blank">
+                                                    <p class="title">github</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <strong>}</strong>
+                    </dd>
+
+                    <!-- 기술 경력 -->
+                    <dt>
+                        <span>work expriences</span>
+                        <strong>{</strong>
+                    </dt>
+                    <dd>
+                        <div class="json-type-2">
+                            <div class="about-content">
+                                <ul>
+                                    <li>
+                                        <span>career</span>
+                                        <div>
+                                            <div class="about-defalut-content">
+                                                <p class="title">㈜ 스마트인테크</p>
+                                                <p><span class="icon-check"></span>프론트엔드 (2024.07 ~ 2025.02)</p>
+                                                <p><span class="icon-check"></span>자사 솔루션(노트, 에디터) 개발</p>
+                                                <br>
+                                                <p>삼성바이오로직스 연구원들이 실험 결과를 기록하고 편집할 수 있는 연구 노트 에디터를 자체 개발 솔루션에 기여 했습니다.</p>
+                                            </div>
+                                            <div class="line"></div>
+                                            <div class="about-defalut-content">
+                                                <p class="title">㈜ 코드파트너즈</p>
+                                                <p><span class="icon-check"></span>퍼블리셔 (2023.06 ~ 2024.06)</p>
+                                                <br>
+                                                <p>이커머스, 소프트웨어, 금융 등 다양한 분야의 웹사이트를 UI/UX 리뉴얼하여 퍼블리싱했습니다.</p>
+                                            </div>
+                                            <div class="line"></div>
+                                            <div class="about-defalut-content">
+                                                <p class="title">㈜ 나누고</p>
+                                                <p><span class="icon-check"></span>프론트엔드 (2022.01 ~ 2023.03.10)</p>
+                                                <p><span class="icon-check"></span>퍼블리셔 (2019.03 ~ 2021.12)</p>
+                                                <p><span class="icon-check"></span>자사 솔루션(호텔 예약 부킹엔진 탑재) 개발</p>
+                                                <p><span class="icon-check"></span>반도체 제조업체, 전자제품 판매 사이트 구축 및 유지보수</p>
+                                                <br>
+                                                <p>자사 홈페이지 개발을 비롯해 그룹사에서 요청한 다양한 웹 서비스 프로젝트에 참여하며 퍼블리싱을 전담하였습니다. 또한 관리자용 시스템, 웹사이트, 하이브리드 웹/앱, Vue2.js 기반 등 다양한 개발 환경에서 작업을 진행했습니다.</p>
+                                                <br>
+                                                <p>원활한 협업을 위해 형상 관리 툴인 Git을 익히고, 팀원들과 주 1회 정기적인 코드 리뷰를 진행하였습니다. 또한 여러 오픈 API (날씨, 인스타그램, 유튜브, 카카오, 구글맵 등)를 활용하여 다양한 서비스 개발 경험을 쌓았습니다.</p>
+                                                <br>
+                                                <p>반응형 웹 개발에 숙련되었으며, 모바일 환경에도 유연하게 대응할 수 있는 능력을 갖추었습니다. 주 사업이 호텔인 만큼, 아고다, 여기어때 등 가격 비교 플랫폼을 대상으로 자체 솔루션인 '아르카'에 부킹엔진을 탑재하는 프로젝트에 기여했습니다. 이 과정에서 HTML5, CSS3, SCSS, JavaScript(jQuery) 기술을 활용해 사용자가 편리하게 이용할 수 있는 웹사이트 구축에 힘썼습니다.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <strong>}</strong>
+                    </dd>
+                </dl>
+                <strong>}</strong>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- portfolio sites section -->
+<!--    <section id="portfolio" class="section">-->
+<!--        <div class="portfolio">-->
+<!--            <h2 class="title">-->
+<!--                <strong><</strong>-->
+<!--                portfolio-->
+<!--                <strong>/></strong>-->
+<!--            </h2>-->
+<!--            <div>준비중</div>-->
+<!--        </div>-->
+<!--    </section>-->
+<section id="portfolio" class="section">
+    <div class="portfolio">
+        <div class="json-type-1">
+            <h2 class="title" data-offset="#portfolio">
+                <span>portfolio sites</span>
+                <strong>{</strong>
+            </h2>
+            <dl>
+                <div class="sub-title-wrap">
+                    <h2 class="sub-title">최근 진행한 프로젝트를 확인하세요.</h2>
+                    <button id="portfolioSiteWriteBtn" class="icon-btn" type="button">
+                        <img src="./images/writing.png" title="등록하기" />
+                    </button>
+                </div>
+
+                <div class="tab-menu">
+                    <ul class="tab-menu-categories">
+                        <li data-menu="호텔/팬션" class="active">호텔/팬션</li>
+                        <li data-menu="쇼핑몰">쇼핑몰</li>
+                        <li data-menu="교육/IT솔루션">교육/IT솔루션</li>
+                        <li data-menu="제조장비 반도체산업">제조장비 반도체산업</li>
+                        <li data-menu="기타">기타</li>
+                    </ul>
+                </div>
+
+                <!-- 호텔/팬션 -->
+                <div id="hotel" class="tab-menu-content active">
+                    <dt>
+                        <span>hotel</span>
+                        <strong>{</strong>
+                    </dt>
+                    <dd>
+                        <div class="json-type-2">
+                            <div id="hotelList" class="site-list-wrap"></div>
+                        </div>
+                        <strong>}</strong>
+                    </dd>
+                </div>
+
+                <!-- 쇼핑몰 -->
+                <div id="shoppingMall" class="tab-menu-content">
+                    <dt>
+                        <span>shopping mall</span>
+                        <strong>{</strong>
+                    </dt>
+                    <dd>
+                        <div class="json-type-2">
+                            <div id="shoppingMallList" class="site-list-wrap"></div>
+                        </div>
+                        <strong>}</strong>
+                    </dd>
+                </div>
+
+                <!-- 교육/IT솔루션 -->
+                <div id="solutionService" class="tab-menu-content">
+                    <dt>
+                        <span>solution service</span>
+                        <strong>{</strong>
+                    </dt>
+                    <dd>
+                        <div class="json-type-2">
+                            <div id="solutionServiceList" class="site-list-wrap"></div>
+                        </div>
+                        <strong>}</strong>
+                    </dd>
+                </div>
+
+                <!-- 제조장비 반도체산업 -->
+                <div id="semiconductor" class="tab-menu-content">
+                    <dt>
+                        <span>semiconductor</span>
+                        <strong>{</strong>
+                    </dt>
+                    <dd>
+                        <div class="json-type-2">
+                            <div id="semiconductorList" class="site-list-wrap"></div>
+                        </div>
+                        <strong>}</strong>
+                    </dd>
+                </div>
+
+                <!-- 기타 -->
+                <div id="etc" class="tab-menu-content">
+                    <dt>
+                        <span>etc</span>
+                        <strong>{</strong>
+                    </dt>
+                    <dd>
+                        <div class="json-type-2">
+                            <div id="etcList" class="site-list-wrap"></div>
+                        </div>
+                        <strong>}</strong>
+                    </dd>
+                </div>
+            </dl>
+            <strong>}</strong>
+        </div>
+    </div>
+</section>
+
+<!-- use skills section -->
+<section id="skill" class="section">
+    <div class="skill">
+        <div class="json-type-1">
+            <h2 class="title" data-offset="#skill">
+                <span>use skills</span>
+                <strong>{</strong>
+            </h2>
+            <dl>
+                <div class="sub-title-wrap">
+                    <h2 class="sub-title">업무에 즉시 사용할 수 있는 기술을 확인하세요.</h2>
+                </div>
+
+                <!-- 협업 / 소통 -->
+                <dt>
+                    <span>communication</span>
+                    <strong>{</strong>
+                </dt>
+                <dd>
+                    <div class="json-type-2">
+                        <div>
+                            <div class="swiper-container swiper-tool-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="70%" title="깃허브">
+                                            <img src="./images/skills/github.png" alt="github" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="80%" title="제플린">
+                                            <img src="./images/skills/zeplin.png" alt="zeplin" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="50%" title="어도비 포토샵">
+                                            <img src="./images/skills/photoshop.png" alt="adobe photoshop" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="80%" title="어도비 XD">
+                                            <img src="./images/skills/xd.png" alt="adobe xd" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" title="채널톡">
+                                            <img src="./images/skills/channel_talk.png" alt="channel talk" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="swiper-tool-arrow">
+                                    <div class="swiper-button-next">
+                                        <img src="./images/slide_next.svg" alt="다음" />
+                                    </div>
+                                    <div class="swiper-button-prev">
+                                        <img src="./images/slide_prev.svg" alt="이전" />
+                                    </div>
+                                </div>
+
+                                <div class="swiper-scrollbar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <strong>}</strong>
+                </dd>
+
+                <!-- 사용 기술 -->
+                <dt>
+                    <span>development</span>
+                    <strong>{</strong>
+                </dt>
+                <dd>
+                    <div class="json-type-2">
+                        <div>
+                            <div class="swiper-container swiper-tool-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="90%" title="HTML5">
+                                            <img src="./images/skills/html.png" alt="html" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="90%" title="CSS3">
+                                            <img src="./images/skills/css.png" alt="css" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="60%" title="SCSS">
+                                            <img src="./images/skills/scss.png" alt="scss" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="65%" title="vue3">
+                                            <img src="./images/skills/vue.png" alt="vue" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="70%" title="자바스크립트">
+                                            <img src="./images/skills/javascript.png" alt="javascript" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="85%" title="제이쿼리">
+                                            <img src="./images/skills/jquery.png" alt="jquery" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="95%" title="부트스트랩">
+                                            <img src="./images/skills/bootstrap.png" alt="bootstrap" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="50%" title="파이어베이스">
+                                            <img src="./images/skills/firebase.png" alt="firebase" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="95%" title="그누보드">
+                                            <img src="./images/skills/gnuboard.png" alt="gnuboard" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="70%" title="워드프레스">
+                                            <img src="./images/skills/wordpress.png" alt="wordpress" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="swiper-tool-arrow">
+                                    <div class="swiper-button-next">
+                                        <img src="./images/slide_next.svg" alt="다음" />
+                                    </div>
+                                    <div class="swiper-button-prev">
+                                        <img src="./images/slide_prev.svg" alt="이전" />
+                                    </div>
+                                </div>
+
+                                <div class="swiper-scrollbar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <strong>}</strong>
+                </dd>
+
+                <!-- 호스팅 -->
+                <dt>
+                    <span>hosting</span>
+                    <strong>{</strong>
+                </dt>
+                <dd>
+                    <div class="json-type-2">
+                        <div>
+                            <div class="swiper-container swiper-tool-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" title="벌쳐">
+                                            <img src="./images/skills/vultr.png" alt="vultr" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" title="닷홈">
+                                            <img src="./images/skills/dothome.png" alt="dothome" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="swiper-tool-arrow">
+                                    <div class="swiper-button-next">
+                                        <img src="./images/slide_next.svg" alt="다음" />
+                                    </div>
+                                    <div class="swiper-button-prev">
+                                        <img src="./images/slide_prev.svg" alt="이전" />
+                                    </div>
+                                </div>
+
+                                <div class="swiper-scrollbar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <strong>}</strong>
+                </dd>
+            </dl>
+            <strong>}</strong>
+        </div>
+    </div>
+</section>
+
+<!-- footer -->
+<footer class="footer">
+    <div class="footer-info-wrap">
+        <dl>
+            <dt>
+                <svg version="1.1" id="Layer_1" fill="none" stroke="#3e54d3" width="24" stroke-width="2.5" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 18.9 16.7" xml:space="preserve">
+                    <g id="Group_543" transform="translate(1.755 1.758)">
+                        <path id="Line_48" class="st0" d="M1.3 6.4l4.5 5.8"/>
+                        <path id="Line_49" class="st0" d="M5.8 12.2l9-11"/>
+                    </g>
+                </svg>
+                함께 나누고 싶은 얘기가 있으시다면
+            </dt>
+            <dd>
+                <button id="channelTalk" type="button">채널톡으로</button>
+            </dd>
+            <dd>연락주시면 빠른시내일에 답장을 드릴게요!</dd>
+        </dl>
+        <div class="footer-info">
+            <div class="footer-sns">
+                <a href="https://github.com/jjong-developer" target="_blank">GitHub</a>
+                <!--                <a href="https://velog.io/@jong_dev" target="_blank">Blog</a>-->
+                <!--                <a href="https://jjong-developer.github.io/techblog/" target="_blank">Blog</a>-->
+            </div>
+            <div class="copyright">
+                <span>Front-End Developer,</span>
+                <a href="https://github.com/jjong-developer" target="_blank">@JJONG</a>
+                <p>본 사이트는 관리자 기능이 포함되어 의도적으로 노출 하고있습니다.</p>
+                <p>본 사이트는 vanilla javscript / firebase v8.10.1 기술로 제작되었습니다.</p>
+                <p>본 사이트는 상업적 목적이 아닌 개인 포트폴리오용으로 제작되었습니다.</p>
+                <p>©Copyright 2025. All right reserved</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- top button -->
+<button id="topBtn" class="top-btn" type="button">
+    <img src="./images/top_btn.svg" alt="top" />
+</button>
 </body>
+
+<!--<script type="text/javascript" src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>-->
+<!--<script type="text/javascript" src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>-->
+<!--<script type="text/javascript" src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>-->
+<!--<script type="text/javascript" src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>-->
+<!-- firebase setting -->
+<script type="module">
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js"
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCWMsZkOxjHQalyD78XivGdADTswSX2FV4",
+        authDomain: "jjong-portfolio.firebaseapp.com",
+        projectId: "jjong-portfolio",
+        storageBucket: "jjong-portfolio.firebasestorage.app",
+        messagingSenderId: "50636572294",
+        appId: "1:50636572294:web:66ef9a21028e34ec05b307"
+    }
+
+    const app = initializeApp(firebaseConfig)
+</script>
 
 <!-- kakao login-->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -28,7 +559,7 @@
 <!-- swiper slider -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
 
-<script type="text/javascript" src="./js/common.js"></script>
-<script type="text/javascript" src="./js/script.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
 
 </html>
