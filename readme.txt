@@ -4,7 +4,6 @@
 4. npm i -g firebase-tools
 5. firebase login
 6. firebase init
-<!-- // firebase -->
 =====================firebase 로컬 실행=====================
 1. firebase serve
 

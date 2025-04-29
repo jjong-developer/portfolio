@@ -1,4 +1,9 @@
+# develop setting
 readme.txt
+
+# firebase confing
 /.firebase
 .firebaserc
 firebase-debug.log
+firebase.json
+public/js/firebase_config.js

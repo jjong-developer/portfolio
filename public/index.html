@@ -19,7 +19,7 @@
 </head>
 
 <body>
-<!-- header gnb menu -->
+<!-- 헤더 -->
 <header class="header">
     <div id="nameView" class="information-view"></div>
     <nav class="nav">
@@ -41,7 +41,7 @@
     </nav>
 </header>
 
-<!-- about section -->
+<!-- 소개 영역 -->
 <div id="aboutBg">
     <section id="about" class="section section-pdt">
         <div class="about ide-style">
@@ -103,7 +103,7 @@
                                                 <p class="title">학력</p>
                                                 <p>
                                                     <span class="icon-check"></span>
-                                                    청주대학교 컴퓨터정보공학과 졸업 (2013.03 ~ 2019.02)
+                                                    청주대학교 컴퓨터정보공학과 4년제 졸업 (2013.03 ~ 2019.02)
                                                 </p>
                                             </div>
                                             <div class="about-defalut-content">
@@ -192,7 +192,7 @@
     </section>
 </div>
 
-<!-- portfolio sites section -->
+<!-- 포트폴리오 사이트 소개 -->
 <!--    <section id="portfolio" class="section">-->
 <!--        <div class="portfolio">-->
 <!--            <h2 class="title">-->
@@ -303,7 +303,7 @@
     </div>
 </section>
 
-<!-- use skills section -->
+<!-- 사용 기술 영역 -->
 <section id="skill" class="section">
     <div class="skill">
         <div class="json-type-1">
@@ -316,7 +316,7 @@
                     <h2 class="sub-title">업무에 즉시 사용할 수 있는 기술을 확인하세요.</h2>
                 </div>
 
-                <!-- 협업 / 소통 -->
+                <!-- 협업/소통 -->
                 <dt>
                     <span>communication</span>
                     <strong>{</strong>
@@ -490,7 +490,7 @@
     </div>
 </section>
 
-<!-- footer -->
+<!-- 하단 -->
 <footer class="footer">
     <div class="footer-info-wrap">
         <dl>
@@ -511,55 +511,35 @@
         <div class="footer-info">
             <div class="footer-sns">
                 <a href="https://github.com/jjong-developer" target="_blank">GitHub</a>
-                <!--                <a href="https://velog.io/@jong_dev" target="_blank">Blog</a>-->
-                <!--                <a href="https://jjong-developer.github.io/techblog/" target="_blank">Blog</a>-->
+<!--                <a href="https://velog.io/@jong_dev" target="_blank">Blog</a>-->
+<!--                <a href="https://jjong-developer.github.io/techblog/" target="_blank">Blog</a>-->
             </div>
             <div class="copyright">
                 <span>Front-End Developer,</span>
                 <a href="https://github.com/jjong-developer" target="_blank">@JJONG</a>
                 <p>본 사이트는 관리자 기능이 포함되어 의도적으로 노출 하고있습니다.</p>
-                <p>본 사이트는 vanilla javscript / firebase v8.10.1 기술로 제작되었습니다.</p>
-                <p>본 사이트는 상업적 목적이 아닌 개인 포트폴리오용으로 제작되었습니다.</p>
+                <p>본 사이트는 vanilla javscript / firebase v11.6.0으로 제작되었습니다.</p>
+                <p>본 사이트는 상업적 목적이 아닌 개인 포트폴리오 소개용으로 제작되었습니다.</p>
                 <p>©Copyright 2025. All right reserved</p>
             </div>
         </div>
     </div>
 </footer>
 
-<!-- top button -->
+<!-- 상/하 스크롤 버튼 -->
 <button id="topBtn" class="top-btn" type="button">
     <img src="./images/top_btn.svg" alt="top" />
 </button>
 </body>
 
-<!--<script type="text/javascript" src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>-->
-<!--<script type="text/javascript" src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>-->
-<!--<script type="text/javascript" src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>-->
-<!--<script type="text/javascript" src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>-->
-<!-- firebase setting -->
-<script type="module">
-    // https://firebase.google.com/docs/web/setup#available-libraries
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js"
+<!-- firebase 환경 설정 -->
+<script type="module" src="js/firebase_config.js"></script>
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCWMsZkOxjHQalyD78XivGdADTswSX2FV4",
-        authDomain: "jjong-portfolio.firebaseapp.com",
-        projectId: "jjong-portfolio",
-        storageBucket: "jjong-portfolio.firebasestorage.app",
-        messagingSenderId: "50636572294",
-        appId: "1:50636572294:web:66ef9a21028e34ec05b307"
-    }
-
-    const app = initializeApp(firebaseConfig)
-</script>
-
-<!-- kakao login-->
+<!-- 카카오 간편 로그인 서비스 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
-<!-- swiper slider -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
-
 <script type="text/javascript" src="js/common.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
+<script type="module" src="js/script.js"></script>
 
 </html>

@@ -380,7 +380,7 @@ img {max-width: 100%;}
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 50px auto 0px auto;
+    margin: 20px auto 0px auto;
     text-transform: uppercase;
 }
 .icon-btn {
@@ -539,7 +539,7 @@ img {max-width: 100%;}
     text-align: center;
 }
 .sns-sign-in-box hr:after {
-    content: "1초 간편 로그인히기";
+    content: "SNS 간편 로그인히기";
     position: relative;
     top: -12px;
     padding: 0px 20px;
