@@ -16,8 +16,9 @@ import {
     googleProvider,
     facebookProvider,
     githubProvider,
+    setPersistence,
+    browserSessionPersistence,
     dbStore,
-    // getCollection,
     collection,
     getDocs,
     doc,
@@ -29,7 +30,6 @@ import {
     dbStorage,
     uploadBytesResumable,
     getDownloadURL,
-    // dbStorageRef,
     ref
 } from './firebase_config.js'
 const siteCollectionRef = collection(dbStore, 'site')
@@ -43,7 +43,7 @@ const month = today.getMonth() + 1
 const day = today.getDate()
 const todayDate = year+'-'+(('00'+month.toString()).slice(-2))+'-'+(('00'+day.toString()).slice(-2))
 const headerSelector = document.querySelector('.header')
-const titleSelector  = document.querySelectorAll('.title')
+const observerSelector  = document.querySelectorAll('.interface-observer')
 const topBtn = document.querySelector('#topBtn')
 const skillBox = document.querySelectorAll('.skill-box')
 const signInOutBtn = document.querySelector('#signInOutBtn')
@@ -51,6 +51,7 @@ const nameView = document.querySelector('#nameView')
 const menuList = document.querySelectorAll('.menu li')
 const tabMenuCategories = document.querySelectorAll('.tab-menu-categories li')
 const tabMenuContent = document.querySelectorAll('.tab-menu-content')
+const resumeFilePath = 'resume/2025_김종욱_이력서.pdf'
 let isUser // 로그인 여/부 상태값을 받기 위함 -> html 파일내에서 생성한 태그는 사용안하는 용도이고 script내에서 동적으로 추가한 html만 사용하기 위함
 let superAdmin = ['jongwook2.kim@gmail.com'] // 관리자 권한 이메일 설정
 let isSuperAdmin, isModalBg = false
@@ -64,7 +65,27 @@ window.addEventListener('DOMContentLoaded', () => {
     window.signInUp = signInUp
     window.signUp = signUp
     window.passwordReset = passwordReset
+
+    resumeFileDownload()
 })
+
+/**
+ * 이력서 파일 다운로드
+ */
+const resumeFileDownload = () => {
+    const resumeDownload = document.getElementById('resumeDownload')
+    const fileRef = ref(dbStorage, resumeFilePath)
+
+    resumeDownload.addEventListener('click', (event) => {
+        event.preventDefault()
+
+        getDownloadURL(fileRef).then((url) => {
+            window.open(url, '_blank')
+        }).catch((error) => {
+            windowPopup('이력서를 열 수 없습니다.<br>다시 시도해 주세요.<br>' + error.message)
+        })
+    })
+}
 
 /**
  * 공통 모달
@@ -363,30 +384,6 @@ document.addEventListener('mousewheel', (event) => {
 })
 
 /**
- * 각 영역 이름 === 메뉴 이름
- */
-// 유동적으로 요소 감지
-let interfaceObserver = new IntersectionObserver((event) => {
-    event.forEach((el) => {
-        if (el.isIntersecting) { // 화면에 요소가 보일때만
-            menuList.forEach((menuEl) => {
-                if (el.target.dataset.offset === menuEl.dataset.offset) {
-                    menuEl.classList.add('active')
-                } else {
-                    menuEl.classList.remove('active')
-                }
-                // el.intersectionRatio
-            })
-        }
-    })
-}, {
-    // rootMargin: '0px 0px 0px 0px'
-})
-for (let v of titleSelector) {
-    interfaceObserver.observe(v)
-}
-
-/**
  * 모바일 메뉴
  */
 document.querySelector('#mobileMenuBtn').addEventListener('click', () => {
@@ -418,38 +415,49 @@ document.querySelector('#mobileMenuBtn').addEventListener('click', () => {
 })
 
 /**
- * 메뉴 클릭 시 이동
+ * 메뉴 클릭 시 해당 영역으로 이동
  */
-menuList.forEach((el, i) => {
+menuList.forEach((el) => {
     el.addEventListener('click', (event) => {
-        let menuScroll = event.target.dataset.offset
-        let menuTarget = document.querySelector(menuScroll)
+        event.preventDefault()
+
+        const menuScroll = event.currentTarget.dataset.offset
+        const menuTarget = document.querySelector(menuScroll)
+
+        if (!menuTarget) {
+            return
+        }
+
+        // 옵저버 실행 중단
+        isScrollClick = true
 
         menuList.forEach((el) => {
             el.classList.remove('active')
         })
+        el.classList.add('active')
 
-        menuList[i].classList.add('active')
-
-        if (menuScroll !== null) {
-            if (document.querySelector('.menu').classList.contains('active')) { // 메뉴 박스 닫힘
-                document.querySelector('.nav .menu').style.right = '-100%'
-                // menu style transition이 0.3초이므로 0.1초 빠르게 딜레이를 같게하기 위함
-                setTimeout(() => {
-                    document.querySelector('.header').style.height = 'unset'
-                }, 200)
-                document.querySelector('.menu').classList.remove('active')
-                document.querySelector('#mobileMenuBtn').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 4h18v2H3V4zm6 7h12v2H9v-2zm-6 7h18v2H3v-2z" fill="rgba(255,255,255,1)"/></svg>'
-                document.querySelector('body').style.cssText = ''
-                document.addEventListener('offscroll', (event) => {})
-            }
-
-            menuTarget?.scrollIntoView({
-                behavior: 'smooth'
-            })
-        } else {
-            return
+        // 모바일 메뉴 닫기
+        const menuBox = document.querySelector('.menu')
+        if (menuBox.classList.contains('active')) { // 메뉴 박스 닫힘
+            document.querySelector('.nav .menu').style.right = '-100%'
+            setTimeout(() => {
+                document.querySelector('.header').style.height = 'unset'
+            }, 200)
+            menuBox.classList.remove('active')
+            document.querySelector('#mobileMenuBtn').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 4h18v2H3V4zm6 7h12v2H9v-2zm-6 7h18v2H3v-2z" fill="rgba(255,255,255,1)"/></svg>`
+            document.body.style.cssText = ''
         }
+
+        // 스크롤 이동
+        menuTarget.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        })
+
+        // 일정 시간 후 옵저버 재실행
+        setTimeout(() => {
+            isScrollClick = false
+        }, 500)
     })
 })
 
@@ -494,7 +502,7 @@ onAuth((user) => {
                         if (user.emailVerified) {
                             try {
                                 await deleteUser(user)
-                                windowPopup('회원 탈퇴처리가 정상적으로 완료되었습니다.<br>이용해주셔서 감사합니다 :)')
+                                windowPopup('정상적으로 회원 탈퇴처리가 완료되었습니다.<br>이용해주셔서 감사합니다 :)')
                                 document.querySelector('#windowPopupOk').addEventListener('click', () => {
                                     reload()
                                 })
@@ -1028,30 +1036,33 @@ function signInUp(self) {
             return
         }
 
-        signInWithEmailAndPassword(dbAuth, userEmail, userPassword).then((result) => {
-            if (result.user.emailVerified) { // 이메일 인증한 유저만 로그인 가능 (boolean 타입)
-                reload()
-            } else {
-                windowPopup('이메일 인증이 확인되지 않았습니다.<br>인증 메일의 링크를 다시 보내드리겠습니다.')
+        // 로그인 상태일때 브라우저 창을 닫고 다시 새창을 열었을때 자동 로그아웃
+        setPersistence(dbAuth, browserSessionPersistence).then(() => {
+            signInWithEmailAndPassword(dbAuth, userEmail, userPassword).then((result) => {
+                if (result.user.emailVerified) { // 이메일 인증한 유저만 로그인 가능 (boolean 타입)
+                    reload()
+                } else {
+                    windowPopup('이메일 인증이 확인되지 않았습니다.<br>인증 메일의 링크를 다시 보내드리겠습니다.')
 
-                document.querySelector('#windowPopupOk').addEventListener('click', () => {
-                    sendEmailVerification(result.user).then(() => {
-                        windowPopup(`${result.user.email} 이메일로 전송된 인증 메일의 링크를 클릭하여 인증을 완료해주세요.<br>인증 후 로그인이 가능합니다.`)
+                    document.querySelector('#windowPopupOk').addEventListener('click', () => {
+                        sendEmailVerification(result.user).then(() => {
+                            windowPopup(`${result.user.email} 이메일로 전송된 인증 메일의 링크를 클릭하여 인증을 완료해주세요.<br>인증 후 로그인이 가능합니다.`)
 
-                        signOut(dbAuth)
+                            signOut(dbAuth)
 
-                        document.querySelector('#windowPopupOk').id = 'emailCertificationReSend'
-                        document.querySelectorAll('#emailCertificationReSend').forEach((el) => {
-                            el.addEventListener('click', () => {
-                                el.closest('#popupBg').remove()
-                                reload()
+                            document.querySelector('#windowPopupOk').id = 'emailCertificationReSend'
+                            document.querySelectorAll('#emailCertificationReSend').forEach((el) => {
+                                el.addEventListener('click', () => {
+                                    el.closest('#popupBg').remove()
+                                    reload()
+                                })
                             })
                         })
                     })
-                })
-            }
-        }).catch((error) => {
-            windowPopup('아이디 또는 비밀번호가 일치하지 않습니다.<br>회원이 아니시라면 회원 가입 후 이용해주세요.')
+                }
+            }).catch((error) => {
+                windowPopup('아이디 또는 비밀번호가 일치하지 않습니다.<br>회원이 아니시라면 회원 가입 후 이용해주세요.')
+            })
         })
     } else if (self.textContent === 'google') {
         signInWithRedirect(dbAuth, googleProvider)
@@ -1252,7 +1263,7 @@ new Swiper('.swiper-tool-container.swiper-container', {
 })
 
 /**
- * 상/하 스크롤 버튼 이벤트
+ * 위/아래 스크롤 이동 버튼
  */
 document.addEventListener('scroll', () => {
     if (document.documentElement.scrollTop > 0 || document.body.scrollTop > 0) {
@@ -1271,3 +1282,27 @@ topBtn.addEventListener('click', () => {
         behavior: 'smooth'
     })
 })
+
+/**
+ * 스크롤 시 화면 옵저버 이벤트
+ */
+let isScrollClick = false // isScrollClick 스크롤 후 메뉴 클릭 시 옵저버 실행 여부
+let interfaceObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting && !isScrollClick) { // 화면에 요소가 보일때만
+            menuList.forEach((menuEl) => {
+                if (entry.target.dataset.offset === menuEl.dataset.offset) {
+                    menuEl.classList.add('active')
+                } else {
+                    menuEl.classList.remove('active')
+                }
+            })
+        }
+    })
+}, {
+    // rootMargin: '0px 0px 0px 0px',
+    threshold: 0.3 // 보이는 비율
+})
+for (let v of observerSelector) {
+    interfaceObserver.observe(v)
+}
