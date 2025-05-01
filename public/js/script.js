@@ -54,7 +54,7 @@ const tabMenuContent = document.querySelectorAll('.tab-menu-content')
 const resumeFilePath = 'resume/2025_김종욱_이력서.pdf'
 let isUser // 로그인 여/부 상태값을 받기 위함 -> html 파일내에서 생성한 태그는 사용안하는 용도이고 script내에서 동적으로 추가한 html만 사용하기 위함
 let superAdmin = ['jongwook2.kim@gmail.com'] // 관리자 권한 이메일 설정
-let isSuperAdmin, isModalBg = false
+let isSuperAdmin, isBg = false
 let isCategories, isType
 let fileUploadRef
 let startPeriodData, endPeriodData, siteCategoriesData, siteTypeData, siteName, siteDescription, siteLink, siteThumbnailUrl = ''
@@ -108,31 +108,27 @@ const modal = (title, contents) => {
         </div>
     `
     document.body.insertAdjacentHTML('beforeend', modalTemplate)
-
-    // 모달 밖 영역 이벤트 실행
-    // document.querySelector('#modalBg').addEventListener('mouseup', (event) => {
-    //     modalClose()
-    // })
-
-    headerFix('modal')
+    document.body.style.overflow = 'hidden'
+    headerFix('floatingWindow')
 }
 
 /**
  * 모달 닫기
  */
 const modalClose = () => {
-    isModalBg = false
+    isBg = false
 
     document.querySelector('#modalBg').remove()
     document.querySelector('.modal-wrap').remove()
+    document.body.style.overflow = 'hidden auto'
 }
 
 /**
- * 공통 alert, confirm창
+ * 공통 알림창
  */
 const windowPopup = (contents, cancelBtn) => {
     const popupTemplate = `
-        <div id="popupBg">
+        <div id="popupBg" class="popup-bg">
             <div class="popup-wrap">
                 <div class="popup">
                     <div class="popup-contents">
@@ -147,29 +143,33 @@ const windowPopup = (contents, cancelBtn) => {
         </div>
     `
     document.body.insertAdjacentHTML('beforeend', popupTemplate)
+    document.body.style.overflow = 'hidden'
+    headerFix('floatingWindow')
 
-    headerFix('modal')
-
-    // alert, confirm창 취소/확인 버튼
     document.querySelector('#windowPopupCancel, #windowPopupOk').addEventListener('click', () => {
-        isModalBg = false
         document.querySelector('#popupBg').remove()
+
+        if (!document.querySelector('#modalBg')?.classList.contains('modal-bg')) {
+            isBg = false
+
+            document.body.style.overflow = 'hidden auto'
+        }
     })
 }
 
 /**
- * 플로팅박스 띄워져있을때 스크롤 시 헤더부분 고정
+ * 창이 띄워져있을때 스크롤 시 헤더 고정
  */
 const headerFix = (type) => {
-    isModalBg = true
+    isBg = true
 
     document.addEventListener('mousewheel', () => {
         if (type === 'menu') {
             if (document.querySelector('.menu').classList.contains('active')) {
                 headerSelector.removeAttribute('id')
             }
-        } else if (type === 'modal') {
-            if (isModalBg && document.querySelector('#modalBg').classList.contains('modal-bg')) {
+        } else if (type === 'floatingWindow') {
+            if (isBg) {
                 headerSelector.removeAttribute('id')
             }
         }
@@ -397,14 +397,14 @@ document.querySelector('#mobileMenuBtn').addEventListener('click', () => {
             document.querySelector('.header').style.height = 'unset'
         }, 200)
         document.querySelector('#mobileMenuBtn').innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40"><path fill="none" d="M0 0h24v24H0z"/><path d="M3 4h18v2H3V4zm6 7h12v2H9v-2zm-6 7h18v2H3v-2z" fill="rgba(255,255,255,1)"/></svg>'
-        document.querySelector('body').style.cssText = ''
+        document.body.style.cssText = ''
         document.addEventListener('offscroll', (event) => {})
     } else { // 메뉴 열림
         document.querySelector('.menu').classList.add('active')
         document.querySelector('.nav .menu').style.right = '0px'
         document.querySelector('.header').style.height = '100%'
         document.querySelector('#mobileMenuBtn').innerHTML = '<svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="60" height="60"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" fill="rgba(255,255,255,1)"/></svg>'
-        document.querySelector('body').style.cssText = 'overflow: hidden; height: 100%;'
+        document.body.style.cssText = 'overflow: hidden; height: 100%;'
         document.addEventListener('onscroll', (event) => {
             event.preventDefault()
             event.stopPropagation()
