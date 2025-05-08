@@ -138,7 +138,7 @@ img {max-width: 100%;}
 }
 .section-pdt {padding-top: 200px !important;}
 .line {
-    margin: 30px 0;
+    margin: 15px 0 50px 0;
     border-top: 1px dashed #ffffff;
 }
 .title {
@@ -697,6 +697,7 @@ img {max-width: 100%;}
 }
 .about-content ul li a {
     color: rgba(255, 255, 255, 0.9);
+    text-decoration: underline;
 }
 .about-content ul li p {
     color: rgba(255, 255, 255, 0.9);
@@ -713,9 +714,9 @@ img {max-width: 100%;}
     font-size: 16px;
     text-transform: unset;
 }
-.about-defalut-content .download-link .title {
+.about-defalut-content .link {
     color: #6c8cff;
-    text-decoration: underline;
+    font-weight: 700;
 }
 
 /**
@@ -905,7 +906,7 @@ img {max-width: 100%;}
     background: rgba(0, 0, 0, 0.8);
     border-radius: 15px;
     font-size: 22px;
-    font-weight: 600;
+    font-weight: 700;
     color: #3e54d3;
     z-index: 1;
 }
@@ -930,7 +931,7 @@ img {max-width: 100%;}
 .footer dl dd #channelTalk {
     font-family: 'Roboto', sans-serif;
     font-size: 40px;
-    font-weight: 600;
+    font-weight: 700;
     color: #ffffff;
     text-decoration: underline;
 }

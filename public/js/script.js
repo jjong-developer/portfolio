@@ -44,12 +44,11 @@ const day = today.getDate()
 const todayDate = year+'-'+(('00'+month.toString()).slice(-2))+'-'+(('00'+day.toString()).slice(-2))
 const headerSelector = document.querySelector('.header')
 const observerSelector  = document.querySelectorAll('.interface-observer')
-const topBtn = document.querySelector('#topBtn')
 const skillBox = document.querySelectorAll('.skill-box')
 const signInOutBtn = document.querySelector('#signInOutBtn')
 const nameView = document.querySelector('#nameView')
 const menuList = document.querySelectorAll('.menu li')
-const tabMenuCategories = document.querySelectorAll('.tab-menu-categories li')
+const tabMenuCategoryList = document.querySelectorAll('.tab-menu-categories li')
 const tabMenuContent = document.querySelectorAll('.tab-menu-content')
 const resumeFilePath = 'resume/2025_김종욱_이력서.pdf'
 let isUser // 로그인 여/부 상태값을 받기 위함 -> html 파일내에서 생성한 태그는 사용안하는 용도이고 script내에서 동적으로 추가한 html만 사용하기 위함
@@ -60,32 +59,47 @@ let fileUploadRef
 let startPeriodData, endPeriodData, siteCategoriesData, siteTypeData, siteName, siteDescription, siteLink, siteThumbnailUrl = ''
 
 window.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('mousewheel', mousewheelEvent)
+    document.addEventListener('scroll', scrollEvent)
+
     // html inline내에 onclick 함수 이벤트 연결
     window.modalClose = modalClose
     window.signInUp = signInUp
     window.signUp = signUp
     window.passwordReset = passwordReset
 
-    resumeFileDownload()
+    // 동적 이벤트 연결
     getSiteListDetail()
-    sortBySiteListBtn()
+    document.querySelector('#topBtn').addEventListener('click', topMove)
+    document.querySelector('#siteWriteBtn').addEventListener('click', siteWrite)
+    document.querySelector('#resumeView').addEventListener('click', resumeFileView)
+    document.querySelector('#sortBySiteListBtn').addEventListener('click', sortBySiteList)
 })
 
 /**
- * 이력서 파일 다운로드
+ * 마우스 휠 제어
  */
-const resumeFileDownload = () => {
-    const resumeDownload = document.getElementById('resumeDownload')
+const mousewheelEvent = (event) => {
+    let wheelData = event.deltaY
+
+    if (wheelData > 0) { // 휠 내릴때
+        headerSelector.id = 'hideTranslate'
+    } else {
+        headerSelector.removeAttribute('id')
+    }
+}
+
+/**
+ * 이력서 파일 보기
+ */
+const resumeFileView = (event) => {
     const fileRef = ref(dbStorage, resumeFilePath)
+    event.preventDefault()
 
-    resumeDownload.addEventListener('click', (event) => {
-        event.preventDefault()
-
-        getDownloadURL(fileRef).then((url) => {
-            window.open(url, '_blank')
-        }).catch((error) => {
-            windowPopup('이력서를 열 수 없습니다.<br>다시 시도해 주세요.<br>' + error.message)
-        })
+    getDownloadURL(fileRef).then((url) => {
+        window.open(url, '_blank')
+    }).catch((error) => {
+        windowPopup('이력서를 열 수 없습니다.<br>다시 시도해 주세요.<br>' + error.message)
     })
 }
 
@@ -244,7 +258,7 @@ const portfolioSite = () => {
                 <input id="fileUploadFind" class="file-upload-hidden" type="file">
             </div>
         </div>
-        <button id="writeBtn" class="modal-btn-type-1" type="button">등록하기</button>
+        <button id="modalSiteWriteBtn" class="modal-btn-type-1" type="button">등록하기</button>
         `
     )
 
@@ -363,32 +377,6 @@ const siteTypeChange = () => {
         siteTypeData = typeSelectValue
     })
 }
-
-/**
- * 마우스 휠 제어
- */
-document.addEventListener('mousewheel', (event) => {
-    let wheelData = event.deltaY
-
-    if (wheelData > 0) { // 휠 내릴때
-        headerSelector.id = 'hideTranslate'
-        // headerSelector.animate(
-        //     {
-        //         transform: [
-        //             'translateY(0px)',
-        //             'translateY(-300px)'
-        //         ]
-        //     },
-        //     {
-        //         duration: 500,
-        //         fill: 'forwards',
-        //         easing: 'ease'
-        //     }
-        // )
-    } else {
-        headerSelector.removeAttribute('id')
-    }
-})
 
 /**
  * 모바일 메뉴
@@ -611,7 +599,7 @@ let siteNoListTemplate = '<div>게시물이 없습니다.</div>'
 /**
  * 포트폴리오 사이트 전체 리스트 호출
  */
-async function renderSiteList(category, listWarpId, listContainerId, reload = false) {
+const renderSiteList = async (category, listWarpId, listContainerId, reload = false) => {
     const listWarp = document.querySelector(`#${listWarpId}`)
     const listContainer = document.querySelector(`#${listContainerId}`)
     listContainer.innerHTML = ''
@@ -633,7 +621,7 @@ async function renderSiteList(category, listWarpId, listContainerId, reload = fa
 /**
  * 포트폴리오 사이트 전체 리스트 생성
  */
-function drawSiteList(docs, listWarp, listContainer) {
+const drawSiteList = (docs, listWarp, listContainer) => {
     const isMoreViewBtn = listWarp.querySelector('#moreViewBtn')
     let siteCount = 0
 
@@ -698,39 +686,36 @@ function drawSiteList(docs, listWarp, listContainer) {
 }
 
 /**
- * 포트폴리오 사이트 정렬 순서 버튼
+ * 포트폴리오 사이트 정렬 순서
  */
-function sortBySiteListBtn() {
-    document.querySelector('#sortBySiteListBtn').addEventListener('click', async () => {
-        sortBy = sortBy === 'startPeriod' ? 'endPeriod' : 'startPeriod'
+const sortBySiteList = async () => {
+    sortBy = sortBy === 'startPeriod' ? 'endPeriod' : 'startPeriod'
+    const startPeriodIcon = document.querySelector('.start-period-icon')
+    const endPeriodIcon = document.querySelector('.end-period-icon')
 
-        const startPeriodIcon = document.querySelector('.start-period-icon')
-        const endPeriodIcon = document.querySelector('.end-period-icon')
+    if (sortBy === 'startPeriod') {
+        startPeriodIcon.style.display = 'inline-block'
+        endPeriodIcon.style.display = 'none'
+        startPeriodIcon.title = '프로젝트 시작일 순'
+    } else {
+        startPeriodIcon.style.display = 'none'
+        endPeriodIcon.style.display = 'inline-block'
+        endPeriodIcon.title = '프로젝트 종료일 순'
+    }
 
-        if (sortBy === 'startPeriod') {
-            startPeriodIcon.style.display = 'inline-block'
-            endPeriodIcon.style.display = 'none'
-            startPeriodIcon.title = '프로젝트 시작일 순'
-        } else {
-            startPeriodIcon.style.display = 'none'
-            endPeriodIcon.style.display = 'inline-block'
-            endPeriodIcon.title = '프로젝트 종료일 순'
-        }
+    const categoryList = [
+        { category: '호텔/팬션', listWarpId: 'hotel', listContainerId: 'hotelList' },
+        { category: '쇼핑몰', listWarpId: 'shoppingMall', listContainerId: 'shoppingMallList' },
+        { category: '교육/IT솔루션', listWarpId: 'solutionService', listContainerId: 'solutionServiceList' },
+        { category: '제조장비 반도체산업', listWarpId: 'semiconductor', listContainerId: 'semiconductorList' },
+        { category: '기타', listWarpId: 'etc', listContainerId: 'etcList' }
+    ]
 
-        const categoryList = [
-            { category: '호텔/팬션', listWarpId: 'hotel', listContainerId: 'hotelList' },
-            { category: '쇼핑몰', listWarpId: 'shoppingMall', listContainerId: 'shoppingMallList' },
-            { category: '교육/IT솔루션', listWarpId: 'solutionService', listContainerId: 'solutionServiceList' },
-            { category: '제조장비 반도체산업', listWarpId: 'semiconductor', listContainerId: 'semiconductorList' },
-            { category: '기타', listWarpId: 'etc', listContainerId: 'etcList' }
-        ]
+    for (const { category, listWarpId, listContainerId } of categoryList) {
+        await renderSiteList(category, listWarpId, listContainerId, false)
+    }
 
-        for (const { category, listWarpId, listContainerId } of categoryList) {
-            await renderSiteList(category, listWarpId, listContainerId, false)
-        }
-
-        getSiteListDetail()
-    })
+    getSiteListDetail()
 }
 
 /**
@@ -827,10 +812,10 @@ const getSiteListDetail = () => {
                             siteTypeChange()
                             fileChange()
 
-                            document.querySelector('#writeBtn').id = 'writeModifyBtn'
+                            document.querySelector('#modalSiteWriteBtn').id = 'modalSiteWriteModifyBtn'
                             document.querySelector('.modal-title h2').textContent = '등록한 프로젝트를 수정 해보세요 :)'
-                            document.querySelector('#writeModifyBtn').textContent = '수정하기'
-                            document.querySelector('#writeModifyBtn').dataset.id = el.getAttribute('data-id')
+                            document.querySelector('#modalSiteWriteModifyBtn').textContent = '수정하기'
+                            document.querySelector('#modalSiteWriteModifyBtn').dataset.id = el.getAttribute('data-id')
 
                             document.querySelector('#startPeriod').value = docListData.projectPeriod['startPeriod']
                             document.querySelector('#endPeriod').value = docListData.projectPeriod['endPeriod']
@@ -845,7 +830,7 @@ const getSiteListDetail = () => {
                                 endPeriodData = docListData.projectPeriod['endPeriod']
                             }
 
-                            // 분류 선택 후 등록 시 selected 가 true일때 다시 불러오기 위함
+                            // 분류 선택 후 등록 시 selected가 true일때 다시 불러오기 위함
                             if (docListData.categoriesInfo['selected'] === true) {
                                 let siteCategoriesDefalut = document.querySelector('#siteCategories')
 
@@ -879,7 +864,7 @@ const getSiteListDetail = () => {
                                 }
                             }
 
-                            document.querySelectorAll('#writeModifyBtn').forEach((el) => {
+                            document.querySelectorAll('#modalSiteWriteModifyBtn').forEach((el) => {
                                 el.addEventListener('click', async (event) => {
                                     if (isSuperAdmin) {
                                         const docRef = doc(dbStore, 'site', event.target.dataset.id)
@@ -972,54 +957,56 @@ const getSiteListDetail = () => {
 /**
  * 포트폴리오 사이트 등록
  */
-document.querySelector('#siteWriteBtn').addEventListener('click', () => {
+const siteWrite = () => {
     portfolioSite()
     calendarChange('start', 'end')
     siteCategoriesChange()
     siteTypeChange()
     fileChange()
 
-    document.querySelector('#writeBtn').addEventListener('click', () => {
-        if (isSuperAdmin) {
-            if (startPeriodData !== undefined && endPeriodData !== undefined && siteCategoriesData !== undefined
-                && siteTypeData !== undefined && siteName.value !== '' && siteDescription.value !== '' && siteLink.value !== ''
-                && fileUploadRef !== undefined) {
-                const dataSave = {
-                    projectPeriod: {
-                        startPeriod: startPeriodData, // 시작 기간
-                        endPeriod: endPeriodData, // 종료 기간
-                    },
-                    categoriesInfo: {
-                        categories: siteCategoriesData, // 분류 여부
-                        selected: isCategories, // 선택 여부
-                    },
-                    typeInfo: {
-                        type: siteTypeData, // 유형 여부
-                        selected: isType, // 선택 여부
-                    },
-                    title: siteName.value, // 사이트명
-                    description: siteDescription.value.replace(/(?:\r\n|\r|\n)/g, '<br />'), // 설명
-                    link: siteLink.value, // 사이트 주소
-                    thumbnailUrl: siteThumbnailUrl, // 썸네일 이미지 경로
-                }
+    document.querySelector('#modalSiteWriteBtn').addEventListener('click', modalSiteWrite)
+}
 
-                addDoc(siteCollectionRef, dataSave).then(() => {
-                    windowPopup('정상적으로 등록 되었습니다.')
-
-                    document.querySelector('#windowPopupOk').addEventListener('click', () => {
-                        reload()
-                    })
-                }).catch((error) => {
-                    windowPopup('등록에 실패하였습니다, 잠시 후 다시 시도해주세요.<br>' + error.message)
-                })
-            } else {
-                windowPopup('모든 항목에 선택/입력 해주세요.')
+const modalSiteWrite = () => {
+    if (isSuperAdmin) {
+        if (startPeriodData !== undefined && endPeriodData !== undefined && siteCategoriesData !== undefined
+            && siteTypeData !== undefined && siteName.value !== '' && siteDescription.value !== '' && siteLink.value !== ''
+            && fileUploadRef !== undefined) {
+            const dataSave = {
+                projectPeriod: {
+                    startPeriod: startPeriodData, // 시작 기간
+                    endPeriod: endPeriodData, // 종료 기간
+                },
+                categoriesInfo: {
+                    categories: siteCategoriesData, // 분류 여부
+                    selected: isCategories, // 선택 여부
+                },
+                typeInfo: {
+                    type: siteTypeData, // 유형 여부
+                    selected: isType, // 선택 여부
+                },
+                title: siteName.value, // 사이트명
+                description: siteDescription.value.replace(/(?:\r\n|\r|\n)/g, '<br />'), // 설명
+                link: siteLink.value, // 사이트 주소
+                thumbnailUrl: siteThumbnailUrl, // 썸네일 이미지 경로
             }
+
+            addDoc(siteCollectionRef, dataSave).then(() => {
+                windowPopup('정상적으로 등록 되었습니다.')
+
+                document.querySelector('#windowPopupOk').addEventListener('click', () => {
+                    reload()
+                })
+            }).catch((error) => {
+                windowPopup('등록에 실패하였습니다, 잠시 후 다시 시도해주세요.<br>' + error.message)
+            })
         } else {
-            windowPopup('권한이 없습니다.<br>시스템 관리자에게 문의바랍니다.')
+            windowPopup('모든 항목에 선택/입력 해주세요.')
         }
-    })
-})
+    } else {
+        windowPopup('권한이 없습니다.<br>시스템 관리자에게 문의바랍니다.')
+    }
+}
 
 function signUp(self) {
     self.closest('.sign-auth-wrap').classList.toggle('switch-mode')
@@ -1131,7 +1118,6 @@ function signInUp(self) {
         signInWithRedirect(dbAuth, facebookProvider)
     } else if (self.textContent === 'kakao') {
         window.Kakao.Auth.authorize()
-
         /*
         const kakaoHeader = {
             'Authorization': '130ea37cbaa01dd162b7a2eb96b96e44',
@@ -1255,11 +1241,11 @@ function passwordReset() {
 }
 
 /**
- * 포트폴리오 사이트 탭 메뉴
+ * 포트폴리오 사이트 카테고리 탭 메뉴
  */
-tabMenuCategories.forEach((el, index) => {
+tabMenuCategoryList.forEach((el, index) => {
     el.addEventListener('click', (event) =>  {
-        tabMenuCategories.forEach((el) => {
+        tabMenuCategoryList.forEach((el) => {
            el.classList.remove('active')
         })
 
@@ -1267,7 +1253,7 @@ tabMenuCategories.forEach((el, index) => {
             el.classList.remove('active')
         })
 
-        tabMenuCategories[index].classList.add('active')
+        tabMenuCategoryList[index].classList.add('active')
         tabMenuContent[index].classList.add('active')
    })
 })
@@ -1324,9 +1310,9 @@ new Swiper('.swiper-tool-container.swiper-container', {
 })
 
 /**
- * 위/아래 스크롤 이동 버튼
+ * 위/아래 스크롤 이동
  */
-document.addEventListener('scroll', () => {
+const scrollEvent = () => {
     if (document.documentElement.scrollTop > 0 || document.body.scrollTop > 0) {
         topBtn.classList.remove('opacity0')
     } else {
@@ -1337,12 +1323,12 @@ document.addEventListener('scroll', () => {
     if ((window.innerHeight + Math.ceil(window.pageYOffset)) >= document.body.offsetHeight) {
         topBtn.classList.add('opacity0')
     }
-})
-topBtn.addEventListener('click', () => {
+}
+const topMove = () => {
     document.body.scrollIntoView({
         behavior: 'smooth'
     })
-})
+}
 
 /**
  * 스크롤 시 화면 옵저버
