@@ -387,7 +387,7 @@ img {max-width: 100%;}
     text-transform: uppercase;
 }
 .icon-btn {
-    width: 42px;
+    width: 35px;
     font-size: unset !important;
 }
 .icon-check {
@@ -560,9 +560,9 @@ img {max-width: 100%;}
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ffffff;
-    border-radius: 5px;
     padding: 3px 5px 3px 5px;
+    /*background: #ffffff;*/
+    /*border-radius: 5px;*/
 }
 .sns-sign-in-info span {
     position: absolute;

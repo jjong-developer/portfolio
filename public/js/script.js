@@ -3,7 +3,7 @@
  */
 import {
     dbAuth,
-    onAuth,
+    onAuthStateChanged,
     signOut,
     deleteUser,
     createUserWithEmailAndPassword,
@@ -15,7 +15,7 @@ import {
     signInWithRedirect,
     googleProvider,
     facebookProvider,
-    githubProvider,
+    getRedirectResult,
     setPersistence,
     browserSessionPersistence,
     dbStore,
@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#topBtn').addEventListener('click', topMove)
     document.querySelector('#siteWriteBtn').addEventListener('click', siteWrite)
     document.querySelector('#resumeView').addEventListener('click', resumeFileView)
-    document.querySelector('#sortBySiteListBtn').addEventListener('click', sortBySiteList)
+    document.querySelector('#sortSiteListBtn').addEventListener('click', sortSiteList)
 })
 
 /**
@@ -90,7 +90,7 @@ const mousewheelEvent = (event) => {
 }
 
 /**
- * 이력서 파일 보기
+ * 이력서 보기
  */
 const resumeFileView = (event) => {
     const fileRef = ref(dbStorage, resumeFilePath)
@@ -459,7 +459,7 @@ menuList.forEach((el) => {
 /**
  * 로그인 인증 상태
  */
-onAuth((user) => {
+onAuthStateChanged(dbAuth, (user) => {
     console.log(user)
     isUser = user
 
@@ -542,7 +542,6 @@ onAuth((user) => {
         })
     } else {
         console.log("로그인 상태가 아닙니다.")
-
         nameView.innerHTML = '<span>게스트</span> 님, 환영합니다 :)'
 
         signInOutBtn.addEventListener('click', () => {
@@ -559,16 +558,16 @@ onAuth((user) => {
                     <div class="sns-sign-in-box">
                         <hr>
                         <div class="sns-sign-in-info-wrap">
-                            <button class="sns-sign-in-info" type="button" onclick="signInUp(this)">
-                                <img src="./images/sns/google_icon.png" alt="구글 이메일로 로그인" />
+                            <button class="sns-sign-in-info" type="button" onclick="signInUp(this)" title="구글 로그인">
+                                <img src="./images/sns/google_icon.png" alt="구글 로그인" />
                                 <span>google</span>
                             </button>
-                            <button class="sns-sign-in-info" type="button" onclick="signInUp(this)">
-                                <img src="./images/sns/facebook_icon.png" alt="페이스북 이메일로 로그인" />
+                            <button class="sns-sign-in-info" type="button" onclick="signInUp(this)" title="페이스북 로그인">
+                                <img src="./images/sns/facebook_icon.png" alt="페이스북 로그인" />
                                 <span>facebook</span>
                             </button>
-                            <button class="sns-sign-in-info" type="button" onclick="signInUp(this)">
-                                <img src="./images/sns/kakao_icon.png" alt="카카오 이메일로 로그인" />
+                            <button class="sns-sign-in-info" type="button" onclick="signInUp(this)" title="카카오 로그인">
+                                <img src="./images/sns/kakao_icon.png" alt="카카오 로그인" />
                                 <span>kakao</span>
                             </button>
                         </div>
@@ -586,6 +585,17 @@ onAuth((user) => {
                 </div>`
             )
         })
+
+        // getRedirectResult(dbAuth).then((result) => {
+        //     if (result && result.user) {
+        //         console.log("✅ 구글 로그인 성공:", result.user)
+        //         window.location.href = "/"
+        //     } else {
+        //         console.log("ℹ️ 구글 로그인 결과 없음")
+        //     }
+        // }).catch((error) => {
+        //     console.error("❌ 구글 로그인 실패:", error.message)
+        // })
     }
 })
 
@@ -688,7 +698,7 @@ const drawSiteList = (docs, listWarp, listContainer) => {
 /**
  * 포트폴리오 사이트 정렬 순서
  */
-const sortBySiteList = async () => {
+const sortSiteList = async () => {
     sortBy = sortBy === 'startPeriod' ? 'endPeriod' : 'startPeriod'
     const startPeriodIcon = document.querySelector('.start-period-icon')
     const endPeriodIcon = document.querySelector('.end-period-icon')
@@ -1071,8 +1081,9 @@ function signInUp(self) {
     let userEmail = document.querySelector('input[name=email]').value;
     let userPassword = (!!document.querySelector('input[name=password]') !== false) ? document.querySelector('input[name=password]').value : ''
     let user_rePassword = (!!document.querySelector('input[name=re_password]') !== false) ? document.querySelector('input[name=re_password]').value : ''
+    let selfTextContent = self.textContent.trim()
 
-    if (self.textContent === '로그인하기') {
+    if (selfTextContent === '로그인하기') {
         if (!userEmail) {
             windowPopup('이메일을(를) 입력해주세요.')
             return
@@ -1095,7 +1106,6 @@ function signInUp(self) {
                     document.querySelector('#windowPopupOk').addEventListener('click', () => {
                         sendEmailVerification(result.user).then(() => {
                             windowPopup(`${result.user.email} 이메일로 전송된 인증 메일의 링크를 클릭하여 인증을 완료해주세요.<br>인증 후 로그인이 가능합니다.`)
-
                             signOut(dbAuth)
 
                             document.querySelector('#windowPopupOk').id = 'emailCertificationReSend'
@@ -1112,11 +1122,11 @@ function signInUp(self) {
                 windowPopup('아이디 또는 비밀번호가 일치하지 않습니다.<br>회원이 아니시라면 회원 가입 후 이용해주세요.')
             })
         })
-    } else if (self.textContent === 'google') {
+    } else if (selfTextContent === 'google') {
         signInWithRedirect(dbAuth, googleProvider)
-    } else if (self.textContent === 'facebook') {
+    } else if (selfTextContent === 'facebook') {
         signInWithRedirect(dbAuth, facebookProvider)
-    } else if (self.textContent === 'kakao') {
+    } else if (selfTextContent === 'kakao') {
         window.Kakao.Auth.authorize()
         /*
         const kakaoHeader = {
@@ -1144,7 +1154,7 @@ function signInUp(self) {
         }
         getKakaoToken()
         */
-    } else if (self.textContent === '수정하기') {
+    } else if (selfTextContent === '수정하기') {
         updatePassword(dbAuth.currentUser, userPassword).then(() => {
             windowPopup('정상적으로 회원 정보가 수정되었습니다.')
             document.querySelector('#windowPopupOk').addEventListener('click', () => {
@@ -1166,7 +1176,7 @@ function signInUp(self) {
 
             windowPopup('회원 정보 수정에 실패하였습니다, 잠시 후 다시 시도해주세요.')
         })
-    } else if (self.textContent === '가입하기') {
+    } else if (selfTextContent === '가입하기') {
         let userName = document.querySelector('input[name=name]').value
 
         if (!userName) {
@@ -1212,7 +1222,7 @@ function signInUp(self) {
 
             windowPopup('회원가입에 실패하였습니다, 잠시 후 다시 시도해주세요.')
         })
-    } else if (self.textContent === '보내기') {
+    } else if (selfTextContent === '보내기') {
         if (!emailCheck(userEmail)) {
             windowPopup('이메일 형식이 올바르지 않습니다.')
             return
