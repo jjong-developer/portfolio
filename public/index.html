@@ -27,8 +27,8 @@
             <a href="./">쫑</a>
         </div>
         <ul class="menu">
-            <li data-offset="#about">about</li>
             <li data-offset="#portfolio">portfolio sites</li>
+            <li data-offset="#about">about</li>
             <li data-offset="#skill">use skills</li>
             <li class="sign-in-out">
                 <button id="signInOutBtn" type="button">sign in</button>
@@ -41,9 +41,127 @@
     </nav>
 </header>
 
-<!-- 소개 영역 -->
+<!-- 포트폴리오 사이트 소개 -->
+<!-- html 예시 -->
+<!--    <section id="portfolio" class="section">-->
+<!--        <div class="portfolio">-->
+<!--            <h2 class="title">-->
+<!--                <strong><</strong>-->
+<!--                portfolio-->
+<!--                <strong>/></strong>-->
+<!--            </h2>-->
+<!--            <div>준비중</div>-->
+<!--        </div>-->
+<!--    </section>-->
+<section id="portfolio" class="section section-pdt">
+    <div class="interface-observer portfolio" data-offset="#portfolio">
+        <div class="json-type-1">
+            <h2 class="title">
+                <span>portfolio sites</span>
+                <strong>{</strong>
+            </h2>
+            <dl>
+                <div class="sub-title-wrap">
+                    <h2 class="sub-title">최근 진행한 프로젝트를 확인하세요.</h2>
+                    <div class="group-btn-wrap">
+                        <button id="siteWriteBtn" class="icon-btn" type="button">
+                            <img src="./images/writing.png" title="등록하기" />
+                        </button>
+                        <button id="sortSiteListBtn" class="icon-btn" type="button">
+                            <img class="start-period-icon" src="./images/sort_asc.png" title="프로젝트 시작일 순" />
+                            <img class="end-period-icon" src="./images/sort_desc.png" title="프로젝트 종료일 순" style="display: none;" />
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-menu">
+                    <ul class="tab-menu-categories">
+                        <li data-menu="호텔/팬션" class="active">호텔/팬션</li>
+                        <li data-menu="쇼핑몰">쇼핑몰</li>
+                        <li data-menu="교육/IT솔루션">교육/IT솔루션</li>
+                        <li data-menu="제조장비 반도체산업">제조장비 반도체산업</li>
+                        <li data-menu="기타">기타</li>
+                    </ul>
+                </div>
+
+                <!-- 호텔/팬션 -->
+                <div id="hotel" class="tab-menu-content active">
+                    <dt>
+                        <span>hotel</span>
+                        <strong>{</strong>
+                    </dt>
+                    <dd>
+                        <div class="json-type-2">
+                            <div id="hotelList" class="site-list-wrap"></div>
+                        </div>
+                        <strong>}</strong>
+                    </dd>
+                </div>
+
+                <!-- 쇼핑몰 -->
+                <div id="shoppingMall" class="tab-menu-content">
+                    <dt>
+                        <span>shopping mall</span>
+                        <strong>{</strong>
+                    </dt>
+                    <dd>
+                        <div class="json-type-2">
+                            <div id="shoppingMallList" class="site-list-wrap"></div>
+                        </div>
+                        <strong>}</strong>
+                    </dd>
+                </div>
+
+                <!-- 교육/IT솔루션 -->
+                <div id="solutionService" class="tab-menu-content">
+                    <dt>
+                        <span>solution service</span>
+                        <strong>{</strong>
+                    </dt>
+                    <dd>
+                        <div class="json-type-2">
+                            <div id="solutionServiceList" class="site-list-wrap"></div>
+                        </div>
+                        <strong>}</strong>
+                    </dd>
+                </div>
+
+                <!-- 제조장비 반도체산업 -->
+                <div id="semiconductor" class="tab-menu-content">
+                    <dt>
+                        <span>semiconductor</span>
+                        <strong>{</strong>
+                    </dt>
+                    <dd>
+                        <div class="json-type-2">
+                            <div id="semiconductorList" class="site-list-wrap"></div>
+                        </div>
+                        <strong>}</strong>
+                    </dd>
+                </div>
+
+                <!-- 기타 -->
+                <div id="etc" class="tab-menu-content">
+                    <dt>
+                        <span>etc</span>
+                        <strong>{</strong>
+                    </dt>
+                    <dd>
+                        <div class="json-type-2">
+                            <div id="etcList" class="site-list-wrap"></div>
+                        </div>
+                        <strong>}</strong>
+                    </dd>
+                </div>
+            </dl>
+            <strong>}</strong>
+        </div>
+    </div>
+</section>
+
+<!-- 개인 소개 -->
 <div id="aboutBg">
-    <section id="about" class="section section-pdt">
+    <section id="about" class="section">
         <div class="interface-observer about ide-style" data-offset="#about">
             <div class="json-type-1">
                 <h2 class="title">
@@ -175,125 +293,7 @@
     </section>
 </div>
 
-<!-- 포트폴리오 사이트 소개 -->
-<!-- html 예시 -->
-<!--    <section id="portfolio" class="section">-->
-<!--        <div class="portfolio">-->
-<!--            <h2 class="title">-->
-<!--                <strong><</strong>-->
-<!--                portfolio-->
-<!--                <strong>/></strong>-->
-<!--            </h2>-->
-<!--            <div>준비중</div>-->
-<!--        </div>-->
-<!--    </section>-->
-<section id="portfolio" class="section">
-    <div class="interface-observer portfolio" data-offset="#portfolio">
-        <div class="json-type-1">
-            <h2 class="title">
-                <span>portfolio sites</span>
-                <strong>{</strong>
-            </h2>
-            <dl>
-                <div class="sub-title-wrap">
-                    <h2 class="sub-title">최근 진행한 프로젝트를 확인하세요.</h2>
-                    <div class="group-btn-wrap">
-                        <button id="siteWriteBtn" class="icon-btn" type="button">
-                            <img src="./images/writing.png" title="등록하기" />
-                        </button>
-                        <button id="sortSiteListBtn" class="icon-btn" type="button">
-                            <img class="start-period-icon" src="./images/sort_asc.png" title="프로젝트 시작일 순" />
-                            <img class="end-period-icon" src="./images/sort_desc.png" title="프로젝트 종료일 순" style="display: none;" />
-                        </button>
-                    </div>
-                </div>
-
-                <div class="tab-menu">
-                    <ul class="tab-menu-categories">
-                        <li data-menu="호텔/팬션" class="active">호텔/팬션</li>
-                        <li data-menu="쇼핑몰">쇼핑몰</li>
-                        <li data-menu="교육/IT솔루션">교육/IT솔루션</li>
-                        <li data-menu="제조장비 반도체산업">제조장비 반도체산업</li>
-                        <li data-menu="기타">기타</li>
-                    </ul>
-                </div>
-
-                <!-- 호텔/팬션 -->
-                <div id="hotel" class="tab-menu-content active">
-                    <dt>
-                        <span>hotel</span>
-                        <strong>{</strong>
-                    </dt>
-                    <dd>
-                        <div class="json-type-2">
-                            <div id="hotelList" class="site-list-wrap"></div>
-                        </div>
-                        <strong>}</strong>
-                    </dd>
-                </div>
-
-                <!-- 쇼핑몰 -->
-                <div id="shoppingMall" class="tab-menu-content">
-                    <dt>
-                        <span>shopping mall</span>
-                        <strong>{</strong>
-                    </dt>
-                    <dd>
-                        <div class="json-type-2">
-                            <div id="shoppingMallList" class="site-list-wrap"></div>
-                        </div>
-                        <strong>}</strong>
-                    </dd>
-                </div>
-
-                <!-- 교육/IT솔루션 -->
-                <div id="solutionService" class="tab-menu-content">
-                    <dt>
-                        <span>solution service</span>
-                        <strong>{</strong>
-                    </dt>
-                    <dd>
-                        <div class="json-type-2">
-                            <div id="solutionServiceList" class="site-list-wrap"></div>
-                        </div>
-                        <strong>}</strong>
-                    </dd>
-                </div>
-
-                <!-- 제조장비 반도체산업 -->
-                <div id="semiconductor" class="tab-menu-content">
-                    <dt>
-                        <span>semiconductor</span>
-                        <strong>{</strong>
-                    </dt>
-                    <dd>
-                        <div class="json-type-2">
-                            <div id="semiconductorList" class="site-list-wrap"></div>
-                        </div>
-                        <strong>}</strong>
-                    </dd>
-                </div>
-
-                <!-- 기타 -->
-                <div id="etc" class="tab-menu-content">
-                    <dt>
-                        <span>etc</span>
-                        <strong>{</strong>
-                    </dt>
-                    <dd>
-                        <div class="json-type-2">
-                            <div id="etcList" class="site-list-wrap"></div>
-                        </div>
-                        <strong>}</strong>
-                    </dd>
-                </div>
-            </dl>
-            <strong>}</strong>
-        </div>
-    </div>
-</section>
-
-<!-- 사용 기술 영역 -->
+<!-- 사용 기술 -->
 <section id="skill" class="section">
     <div class="interface-observer skill" data-offset="#skill">
         <div class="json-type-1">
@@ -305,6 +305,89 @@
                 <div class="sub-title-wrap">
                     <h2 class="sub-title">업무에 즉시 사용할 수 있는 기술을 확인하세요.</h2>
                 </div>
+
+                <!-- 사용 기술 -->
+                <dt>
+                    <span>development</span>
+                    <strong>{</strong>
+                </dt>
+                <dd>
+                    <div class="json-type-2">
+                        <div>
+                            <div class="swiper-container swiper-tool-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="90%" title="HTML5">
+                                            <img src="./images/skills/html.png" alt="html" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="90%" title="CSS3">
+                                            <img src="./images/skills/css.png" alt="css" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="60%" title="SCSS">
+                                            <img src="./images/skills/scss.png" alt="scss" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="65%" title="vue3">
+                                            <img src="./images/skills/vue.png" alt="vue" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="80%" title="자바스크립트">
+                                            <img src="./images/skills/javascript.png" alt="javascript" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="60%" title="타입스크립트">
+                                            <img src="./images/skills/typescript.svg" alt="typescript" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="85%" title="제이쿼리">
+                                            <img src="./images/skills/jquery.png" alt="jquery" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="100%" title="부트스트랩">
+                                            <img src="./images/skills/bootstrap.png" alt="bootstrap" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="60%" title="파이어베이스">
+                                            <img src="./images/skills/firebase.png" alt="firebase" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="95%" title="그누보드">
+                                            <img src="./images/skills/gnuboard.png" alt="gnuboard" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="skill-box" data-skill="70%" title="워드프레스">
+                                            <img src="./images/skills/wordpress.png" alt="wordpress" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="swiper-tool-arrow">
+                                    <div class="swiper-button-next">
+                                        <img src="./images/slide_next.svg" alt="다음" />
+                                    </div>
+                                    <div class="swiper-button-prev">
+                                        <img src="./images/slide_prev.svg" alt="이전" />
+                                    </div>
+                                </div>
+
+                                <div class="swiper-scrollbar"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <strong>}</strong>
+                </dd>
 
                 <!-- 협업/소통 -->
                 <dt>
@@ -359,85 +442,7 @@
                     <strong>}</strong>
                 </dd>
 
-                <!-- 사용 기술 -->
-                <dt>
-                    <span>development</span>
-                    <strong>{</strong>
-                </dt>
-                <dd>
-                    <div class="json-type-2">
-                        <div>
-                            <div class="swiper-container swiper-tool-container">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <div class="skill-box" data-skill="90%" title="HTML5">
-                                            <img src="./images/skills/html.png" alt="html" />
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="skill-box" data-skill="90%" title="CSS3">
-                                            <img src="./images/skills/css.png" alt="css" />
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="skill-box" data-skill="60%" title="SCSS">
-                                            <img src="./images/skills/scss.png" alt="scss" />
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="skill-box" data-skill="65%" title="vue3">
-                                            <img src="./images/skills/vue.png" alt="vue" />
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="skill-box" data-skill="70%" title="자바스크립트">
-                                            <img src="./images/skills/javascript.png" alt="javascript" />
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="skill-box" data-skill="85%" title="제이쿼리">
-                                            <img src="./images/skills/jquery.png" alt="jquery" />
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="skill-box" data-skill="95%" title="부트스트랩">
-                                            <img src="./images/skills/bootstrap.png" alt="bootstrap" />
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="skill-box" data-skill="50%" title="파이어베이스">
-                                            <img src="./images/skills/firebase.png" alt="firebase" />
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="skill-box" data-skill="95%" title="그누보드">
-                                            <img src="./images/skills/gnuboard.png" alt="gnuboard" />
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="skill-box" data-skill="70%" title="워드프레스">
-                                            <img src="./images/skills/wordpress.png" alt="wordpress" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="swiper-tool-arrow">
-                                    <div class="swiper-button-next">
-                                        <img src="./images/slide_next.svg" alt="다음" />
-                                    </div>
-                                    <div class="swiper-button-prev">
-                                        <img src="./images/slide_prev.svg" alt="이전" />
-                                    </div>
-                                </div>
-
-                                <div class="swiper-scrollbar"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <strong>}</strong>
-                </dd>
-
-                <!-- 호스팅 -->
+                <!-- 클라우드 호스팅 서버 -->
                 <dt>
                     <span>hosting</span>
                     <strong>{</strong>
