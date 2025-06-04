@@ -50,7 +50,7 @@ const nameView = document.querySelector('#nameView')
 const menuList = document.querySelectorAll('.menu li')
 const tabMenuCategoryList = document.querySelectorAll('.tab-menu-categories li')
 const tabMenuContent = document.querySelectorAll('.tab-menu-content')
-const resumeFilePath = 'resume/2025_김종욱_이력서.pdf'
+const resumeFilePath = 'resume/이력서_김종욱.pdf'
 let isUser // 로그인 여/부 상태값을 받기 위함 -> html 파일내에서 생성한 태그는 사용안하는 용도이고 script내에서 동적으로 추가한 html만 사용하기 위함
 let superAdmin = ['jongwook2.kim@gmail.com'] // 관리자 권한 이메일 설정
 let isSuperAdmin, isBg = false
@@ -99,7 +99,7 @@ const resumeFileView = (event) => {
     getDownloadURL(fileRef).then((url) => {
         window.open(url, '_blank')
     }).catch((error) => {
-        windowPopup('이력서를 열 수 없습니다.<br>다시 시도해 주세요.<br>' + error.message)
+        windowPopup('이력서를 열 수 없습니다.<br>다시 시도해 주세요.')
     })
 }
 
