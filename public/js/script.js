@@ -98,7 +98,7 @@ const resumeFileView = (event) => {
 
     getDownloadURL(fileRef).then((url) => {
         window.open(url, '_blank')
-    }).catch((error) => {
+    }).catch(() => {
         windowPopup('이력서를 열 수 없습니다.<br>다시 시도해 주세요.')
     })
 }
@@ -1275,7 +1275,7 @@ skillBox.forEach((el, index) => {
     let dataSkill = el.getAttribute('data-skill')
     let skillTemplate = '' +
         '<div class="skill-view skill-view-'+ index +'">' +
-            '<span>' + (dataSkill !== null ? dataSkill : "no skill") + '</span>' +
+            '<span>' + (dataSkill !== null ? dataSkill : "") + '</span>' +
         '</div>'
 
     el.addEventListener('mouseenter', () => {

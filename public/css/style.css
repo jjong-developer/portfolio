@@ -48,7 +48,7 @@ a:active, a:focus {
 select {
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 16l-6-6h12z" fill="rgba(62,84,211,1)"/></svg>') right transparent no-repeat;
     height: 35px;
-    padding: 0px 15px 0px 15px;
+    padding: 0 15px 0 15px;
     margin: 0 15px 15px 0;
     color: #ffffff;
     border: 1px solid #666666;
@@ -62,11 +62,11 @@ select::-ms-expand {display: none;}
 button, input, textarea {font-family: 'Noto Sans KR', sans-serif; border: none; outline: 0; background: none; padding: 0; color: #ffffff; font-size: 14px;}
 button {cursor: pointer;}
 input {width: 100%; height: 50px; border: 1px solid #666666; padding: 0 15px 0 15px; margin: 0 0 15px 0; font-size: 15px;}
-input::focus {border: 1px solid #3e54d3;}
-input::-webkit-autofill,
-input::-webkit-autofill:hover,
-input::-webkit-autofill:focus,
-input::-webkit-autofill:active {
+input:focus {border: 1px solid #3e54d3;}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
     -webkit-transition: background-color 9999s ease-out;
     -webkit-text-fill-color: #ffffff;
@@ -113,9 +113,9 @@ input[type="date"]::-webkit-datetime-edit-year-field {
     color: #ffffff;
 }
 textarea {font-family: 'Noto Sans KR', sans-serif; width: 100%; resize: none; margin: 0 0 15px 0; font-size: 15px; font-weight: 400 !important;}
-textarea::focus {border: 1px solid #3e54d3;}
-select::focus {border: 1px solid #3e54d3;}
-p {line-height: 1.2; margin:0px;}
+textarea:focus {border: 1px solid #3e54d3;}
+select:focus {border: 1px solid #3e54d3;}
+p {line-height: 1.2; margin:0;}
 em {font-style: unset;}
 img {max-width: 100%;}
 .nav,
@@ -124,14 +124,14 @@ img {max-width: 100%;}
 .footer-info-wrap {
     width: 100%;
     max-width: 1310px;
-    margin: 0px auto;
-    padding: 0px 20px 0px 20px;
+    margin: 0 auto;
+    padding: 0 20px 0 20px;
 }
 
 /**
     common
 */
-.opacity0 {opacity: 0% !important;}
+.opacity0 {opacity: 0 !important;}
 .section {
     height: 100%;
     padding-top: 100px !important;
@@ -156,7 +156,7 @@ img {max-width: 100%;}
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin: 0px 0px 50px 0px;
+    margin: 0 0 50px 0;
 }
 .sub-title-wrap .group-btn-wrap {
     display: flex;
@@ -201,10 +201,10 @@ img {max-width: 100%;}
 .ide-style .json-type-2 {
     background: #000000;
     padding: 40px 45px 40px 45px;
-    margin: 10px 0px 10px 0px;
+    margin: 10px 0 10px 0;
 }
 .json-type-2 {
-    padding: 40px 0px 40px 50px;
+    padding: 40px 0 40px 50px;
     border-left: 1px solid #666666;
 }
 .file-box {
@@ -366,24 +366,24 @@ img {max-width: 100%;}
     display: flex;
     align-items: center;
     width: 100%;
-    margin: 0px 15px 15px 0px;
+    margin: 0 15px 15px 0;
 }
 .modal-date-box:last-child {
-    margin: 0px 0px 15px 0px;
+    margin: 0 0 15px 0;
 }
 .modal-date-box label {
     flex: 115px;
 }
 .modal-date-box input {
     height: 35px;
-    margin: 0px;
+    margin: 0;
     font-size: 14px;
 }
 .more-view {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20px auto 0px auto;
+    margin: 20px auto 0 auto;
     text-transform: uppercase;
 }
 .icon-btn {
@@ -520,10 +520,10 @@ img {max-width: 100%;}
     sign up / sign in / sign delete
 */
 .sign-btn {
-    margin: 5px 0px 40px 0px;
+    margin: 5px 0 40px 0;
 }
 .sign-in-box {
-    margin: 0px 0px 20px 0px;
+    margin: 0 0 20px 0;
 }
 .sign-in-box input {
 
@@ -532,7 +532,7 @@ img {max-width: 100%;}
 
 }
 .sns-sign-in-box {
-    margin: 0px 0px 50px 0px;
+    margin: 0 0 50px 0;
 }
 .sns-sign-in-box hr {
     border-width: 0;
@@ -546,7 +546,7 @@ img {max-width: 100%;}
     content: "SNS 간편 로그인히기";
     position: relative;
     top: -12px;
-    padding: 0px 20px;
+    padding: 0 20px;
     background: #1E1E1E;
 }
 .sns-sign-in-info-wrap {
@@ -554,7 +554,7 @@ img {max-width: 100%;}
     justify-content: center;
     flex-wrap: wrap;
     gap: 12px;
-    margin: 40px 0px 0px 0px;
+    margin: 40px 0 0 0;
 }
 .sns-sign-in-info {
     display: flex;
@@ -642,10 +642,10 @@ img {max-width: 100%;}
 }
 .user-info-modify label {
     display: block;
-    margin: 0px 0px 5px 0px;
+    margin: 0 0 5px 0;
 }
 .password-reset-box {
-    margin: 0px;
+    margin: 0;
 }
 
 /**
@@ -655,7 +655,6 @@ img {max-width: 100%;}
     background: url("../images/bg_code.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    /* background-size: 1920px 666px; */
     background-attachment: fixed;
     background-position: bottom;
 }
@@ -669,15 +668,15 @@ img {max-width: 100%;}
 
 }
 .about-content ul:last-child {
-    margin: 0px 0px 0px 0px;
+    margin: 0 0 0 0;
 }
 .about-content ul li {
     display: flex;
     align-items: start;
-    margin: 0px 0px 30px 0px;
+    margin: 0 0 30px 0;
 }
 .about-content ul li:last-child {
-    margin: 0px 0px 0px 0px;
+    margin: 0 0 0 0;
 }
 .about-content ul li span {
     text-transform: capitalize;
@@ -688,9 +687,9 @@ img {max-width: 100%;}
     align-items: center;
     justify-content: center;
     min-width: 90px;
-    background: #3254d2;
-    margin: 0px 10px 0px 0px;
+    margin: 0 10px 0 0;
     padding: 3px 10px 3px 10px;
+    background: #3254d2;
     border-radius: 5px;
     color: #ffffff;
     font-weight: 400;
@@ -703,18 +702,18 @@ img {max-width: 100%;}
     color: rgba(255, 255, 255, 0.9);
     line-height: unset;
 }
-.about-defalut-content {
-    margin: 0px 0px 15px 0px;
+.about-default-content {
+    margin: 0 0 15px 0;
 }
-.about-defalut-content:last-child {
-    margin: 0px;
+.about-default-content:last-child {
+    margin: 0;
 }
-.about-defalut-content .title {
+.about-default-content .title {
     color: #3fcfa6;
     font-size: 16px;
     text-transform: unset;
 }
-.about-defalut-content .link {
+.about-default-content .link {
     color: #6c8cff;
     font-weight: 700;
 }
@@ -727,7 +726,7 @@ img {max-width: 100%;}
     border-bottom: 1px solid #666666;
 }
 .tab-menu {
-    margin: 0px 0px 30px 0px;
+    margin: 0 0 30px 0;
 }
 .tab-menu ul {
     display: flex;
@@ -742,7 +741,7 @@ img {max-width: 100%;}
 }
 .tab-menu ul li.active {
     border-bottom: 3px solid #3e54d3;
-    padding: 0px 0px 2px 0px;
+    padding: 0 0 2px 0;
     color: #ffffff;
 }
 .tab-menu-content {
@@ -770,7 +769,8 @@ img {max-width: 100%;}
 .site-list-box .thumbnail {
     width: 100%;
     height: 100%;
-    box-shadow: rgb(0 0 0 / 30%) 20px 20px 12px 0px;
+    object-fit: cover;
+    box-shadow: rgb(0 0 0 / 30%) 20px 20px 12px 0;
 }
 .site-detail-view {
     position: absolute;
@@ -778,8 +778,9 @@ img {max-width: 100%;}
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.9);
     padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(0, 0, 0, 0.9);
 }
 .site-detail-view .site-detail-view-type {
     font-family: 'Roboto', sans-serif;
@@ -788,7 +789,7 @@ img {max-width: 100%;}
     font-weight: 400;
 }
 .site-detail-view .site-detail-view-title {
-    margin: -5px 0px 5px 0px;
+    margin: -5px 0 5px 0;
     font-size: 28px;
 }
 .site-detail-view .site-detail-view-period {
@@ -800,7 +801,7 @@ img {max-width: 100%;}
     -webkit-line-clamp: 11;
     -webkit-box-orient: vertical;
     display: -webkit-box;
-    margin: 30px 0px 0px 0px;
+    margin: 30px 0 0 0;
     word-break: keep-all;
     font-size: 16px;
 }
@@ -812,8 +813,8 @@ img {max-width: 100%;}
     display: flex;
     align-items: center;
     gap: 5px;
-    border: 1px solid #ffffff;
     padding: 10px 15px 10px 15px;
+    border: 1px solid #ffffff;
     color: #ffffff;
     text-transform: uppercase;
     transition: 0.3s;
