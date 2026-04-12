@@ -1,5 +1,5 @@
 /**
- * 채널톡 서비스
+ * 채널톡
  */
 (function() {
     var w = window

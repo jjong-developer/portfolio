@@ -13,9 +13,10 @@ import {
     sendEmailVerification,
     sendPasswordResetEmail,
     signInWithRedirect,
+    getRedirectResult,
+    signInWithPopup,
     googleProvider,
     facebookProvider,
-    getRedirectResult,
     setPersistence,
     browserSessionPersistence,
     dbStore,
@@ -170,6 +171,15 @@ const windowPopup = (contents, cancelBtn) => {
 
             document.body.style.overflow = 'hidden auto'
         }
+    })
+}
+
+/**
+ * 팝업 확인 버튼 클릭 시
+ */
+const windowPopupOk = () => {
+    document.querySelector('#windowPopupOk').addEventListener('click', () => {
+        reload()
     })
 }
 
@@ -498,9 +508,7 @@ onAuthStateChanged(dbAuth, (user) => {
                             try {
                                 await deleteUser(user)
                                 windowPopup('정상적으로 회원 탈퇴처리가 완료되었습니다.<br>이용해주셔서 감사합니다 :)')
-                                document.querySelector('#windowPopupOk').addEventListener('click', () => {
-                                    reload()
-                                })
+                                windowPopupOk()
                             } catch (error) {
                                 windowPopup('회원 탈퇴처리가 실패하였습니다, 잠시 후 다시 시도해주세요.<br>' + error.message)
                             }
@@ -536,9 +544,7 @@ onAuthStateChanged(dbAuth, (user) => {
         signInOutBtn.addEventListener('click', async () => {
             await signOut(dbAuth)
             windowPopup('로그아웃 되었습니다.')
-            document.querySelector('#windowPopupOk').addEventListener('click', () => {
-                reload()
-            })
+            windowPopupOk()
         })
     } else {
         console.log("로그인 상태가 아닙니다.")
@@ -585,17 +591,6 @@ onAuthStateChanged(dbAuth, (user) => {
                 </div>`
             )
         })
-
-        // getRedirectResult(dbAuth).then((result) => {
-        //     if (result && result.user) {
-        //         console.log("✅ 구글 로그인 성공:", result.user)
-        //         window.location.href = "/"
-        //     } else {
-        //         console.log("ℹ️ 구글 로그인 결과 없음")
-        //     }
-        // }).catch((error) => {
-        //     console.error("❌ 구글 로그인 실패:", error.message)
-        // })
     }
 })
 
@@ -900,9 +895,7 @@ const getSiteListDetail = () => {
                                         try {
                                             await updateDoc(docRef, dataUpdateSave)
                                             windowPopup('게시물이 수정되었습니다.')
-                                            document.querySelector('#windowPopupOk').addEventListener('click', () => {
-                                                reload()
-                                            })
+                                            windowPopupOk()
                                         } catch (error) {
                                             windowPopup('게시물 수정 중 오류가 발생했습니다.<br>' + error.message)
                                         }
@@ -936,9 +929,7 @@ const getSiteListDetail = () => {
                                         try {
                                             await deleteDoc(docRef)
                                             windowPopup('게시물이 삭제되었습니다.')
-                                            document.querySelector('#windowPopupOk').addEventListener('click', () => {
-                                                reload()
-                                            })
+                                            windowPopupOk()
                                         } catch (error) {
                                             windowPopup('게시물 삭제 중 오류가 발생했습니다.<br>' + error.message)
                                         }
@@ -1003,10 +994,7 @@ const modalSiteWrite = () => {
 
             addDoc(siteCollectionRef, dataSave).then(() => {
                 windowPopup('정상적으로 등록 되었습니다.')
-
-                document.querySelector('#windowPopupOk').addEventListener('click', () => {
-                    reload()
-                })
+                windowPopupOk()
             }).catch((error) => {
                 windowPopup('등록에 실패하였습니다, 잠시 후 다시 시도해주세요.<br>' + error.message)
             })
@@ -1082,6 +1070,30 @@ function signInUp(self) {
     let userPassword = (!!document.querySelector('input[name=password]') !== false) ? document.querySelector('input[name=password]').value : ''
     let user_rePassword = (!!document.querySelector('input[name=re_password]') !== false) ? document.querySelector('input[name=re_password]').value : ''
     let selfTextContent = self.textContent.trim()
+    const authProviders = {
+        google: googleProvider,
+        facebook: facebookProvider,
+    }
+    const provider = authProviders[selfTextContent]
+
+    // SNS 간편 로그인
+    if (provider) {
+        // signInWithRedirect(dbAuth, googleProvider)
+        // getRedirectResult(dbAuth).then((result) => {
+        //     if (result) {
+        //         const user = result.user;
+        //     }
+        // }).catch((error) => {
+        // });
+        signInWithPopup(dbAuth, provider).then(() => {
+            reload()
+        }).catch((error) => {
+            windowPopup(error.message)
+        })
+    }
+    if (selfTextContent === 'kakao') {
+        window.Kakao.Auth.authorize()
+    }
 
     if (selfTextContent === '로그인하기') {
         if (!userEmail) {
@@ -1101,65 +1113,20 @@ function signInUp(self) {
                 if (result.user.emailVerified) { // 이메일 인증한 유저만 로그인 가능 (boolean 타입)
                     reload()
                 } else {
-                    windowPopup('이메일 인증이 확인되지 않았습니다.<br>인증 메일의 링크를 다시 보내드리겠습니다.')
-
-                    document.querySelector('#windowPopupOk').addEventListener('click', () => {
-                        sendEmailVerification(result.user).then(() => {
-                            windowPopup(`${result.user.email} 이메일로 전송된 인증 메일의 링크를 클릭하여 인증을 완료해주세요.<br>인증 후 로그인이 가능합니다.`)
-                            signOut(dbAuth)
-
-                            document.querySelector('#windowPopupOk').id = 'emailCertificationReSend'
-                            document.querySelectorAll('#emailCertificationReSend').forEach((el) => {
-                                el.addEventListener('click', () => {
-                                    el.closest('#popupBg').remove()
-                                    reload()
-                                })
-                            })
-                        })
+                    signOut(dbAuth)
+                    sendEmailVerification(result.user).then(() => {
+                        windowPopup(`이메일 인증이 확인되지 않았습니다.<br>${result.user.email} 이메일로 전송된 인증 메일의 링크를 클릭하여 인증을 완료해주세요.<br>인증 후 로그인이 가능합니다.`)
+                        windowPopupOk()
                     })
                 }
             }).catch((error) => {
                 windowPopup('아이디 또는 비밀번호가 일치하지 않습니다.<br>회원이 아니시라면 회원 가입 후 이용해주세요.')
             })
         })
-    } else if (selfTextContent === 'google') {
-        signInWithRedirect(dbAuth, googleProvider)
-    } else if (selfTextContent === 'facebook') {
-        signInWithRedirect(dbAuth, facebookProvider)
-    } else if (selfTextContent === 'kakao') {
-        window.Kakao.Auth.authorize()
-        /*
-        const kakaoHeader = {
-            'Authorization': '130ea37cbaa01dd162b7a2eb96b96e44',
-            'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-        };
-        const getKakaoToken = async (code) => {
-            console.log('loginWithKakao')
-            try {
-                const data = {
-                    grant_type: 'authorization_code',
-                    client_id: '34d1864b0ed999a00aff11abe41e89b5',
-                    redirect_uri: 'http://localhost:5000/auth',
-                    code: code,
-                }
-                const queryString = Object.keys(data)
-                    .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
-                    .join('&')
-                const result = await axios.post('https://kauth.kakao.com/oauth/token', queryString, { headers: kakaoHeader })
-                console.log('카카오 토큰', result)
-                return result
-            } catch (error) {
-                return error
-            }
-        }
-        getKakaoToken()
-        */
     } else if (selfTextContent === '수정하기') {
         updatePassword(dbAuth.currentUser, userPassword).then(() => {
             windowPopup('정상적으로 회원 정보가 수정되었습니다.')
-            document.querySelector('#windowPopupOk').addEventListener('click', () => {
-                reload()
-            })
+            windowPopupOk()
         }).catch((error) => {
             if (error.code === 'auth/weak-password') {
                 windowPopup('비밀번호는 6자 이상이어야 합니다.')
@@ -1202,9 +1169,8 @@ function signInUp(self) {
             }).then(() => {
                 sendEmailVerification(result.user)
                 signOut(dbAuth) // createUserWithEmailAndPassword는 자동 로그인되기 때문에 메일 인증을 위해 로그아웃
-
                 windowPopup('본인확인을 위해서 가입하신 이메일로 전송된 인증 메일의 링크를 클릭하여 인증을 완료해주세요.<br>인증 후 로그인이 가능합니다.')
-
+                windowPopupOk()
                 document.querySelector('#windowPopupOk').addEventListener('click', () => {
                     reload()
                 })
@@ -1225,7 +1191,6 @@ function signInUp(self) {
     } else if (selfTextContent === '보내기') {
         if (!emailCheck(userEmail)) {
             windowPopup('이메일 형식이 올바르지 않습니다.')
-            return
         } else {
             sendPasswordResetEmail(dbAuth, userEmail).then(() => {
 
