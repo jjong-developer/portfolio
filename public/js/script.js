@@ -13,10 +13,10 @@ import {
     sendEmailVerification,
     sendPasswordResetEmail,
     signInWithRedirect,
-    getRedirectResult,
     signInWithPopup,
     googleProvider,
     facebookProvider,
+    getRedirectResult,
     setPersistence,
     browserSessionPersistence,
     dbStore,
@@ -523,12 +523,16 @@ onAuthStateChanged(dbAuth, (user) => {
                     `<div class="user-info-modify">
                         <label for="">이름</label>
                         <input type="text" name="name" value="${user.displayName}" autocomplete="off" disabled />
+                        
                         <label for="">이메일</label>
                         <input type="text" name="email" value="${user.email}" autocomplete="off" disabled placeholder="이메일을(를) 입력해주세요." />
+                        
                         <label for="">비밀번호</label>
-                        <input type="password" name="password" value="" autocomplete="off" placeholder="비밀번호을(를) 입력해주세요." />
+                        <input type="password" name="password" value="" autocomplete="new-password" placeholder="비밀번호을(를) 입력해주세요." />
+                        
                         <label for="">비밀번호 확인</label>
-                        <input type="password" name="re_password" value="" autocomplete="off" placeholder="비밀번호을(를) 한번 더 입력해주세요." />
+                        <input type="password" name="re_password" value="" autocomplete="new-password" placeholder="비밀번호을(를) 한번 더 입력해주세요." />
+                        
                         <button class="modal-btn-type-1" type="button" onclick="signInUp(this)">수정하기</button>
                     </div>`
                 )
@@ -565,15 +569,15 @@ onAuthStateChanged(dbAuth, (user) => {
                         <hr>
                         <div class="sns-sign-in-info-wrap">
                             <button class="sns-sign-in-info" type="button" onclick="signInUp(this)" title="구글 로그인">
-                                <img src="./images/sns/google_icon.png" alt="구글 로그인" />
+                                <img src="/images/sns/google_icon.png" alt="구글 로그인" />
                                 <span>google</span>
                             </button>
                             <button class="sns-sign-in-info" type="button" onclick="signInUp(this)" title="페이스북 로그인">
-                                <img src="./images/sns/facebook_icon.png" alt="페이스북 로그인" />
+                                <img src="/images/sns/facebook_icon.png" alt="페이스북 로그인" />
                                 <span>facebook</span>
                             </button>
                             <button class="sns-sign-in-info" type="button" onclick="signInUp(this)" title="카카오 로그인">
-                                <img src="./images/sns/kakao_icon.png" alt="카카오 로그인" />
+                                <img src="/images/sns/kakao_icon.png" alt="카카오 로그인" />
                                 <span>kakao</span>
                             </button>
                         </div>
@@ -749,10 +753,10 @@ const getSiteListDetail = () => {
                     <div class="site-detail-view site-detail-view-${docList.id}">
                         <div class="btn-wrap">
                             <button id="modifyBtn" class="icon-btn" data-id="${docList.id}" type="button">
-                                <img src="./images/edit.png" title="수정하기" />
+                                <img src="./images/edit.png" alt="수정하기" title="수정하기" />
                             </button>
                             <button id="deleteBtn" class="icon-btn" data-id="${docList.id}" type="button">
-                                <img src="./images/trash.png" title="삭제하기" />
+                                <img src="./images/trash.png" alt="삭제하기" title="삭제하기" />
                             </button>
                         </div>
                         <span class="site-detail-view-type">${docListData.typeInfo['type']}</span>
@@ -1041,7 +1045,7 @@ function signUp(self) {
 
         document.querySelector('.sign-up-box .email-auth-box').insertAdjacentHTML('beforebegin', inputNameHtml)
         document.querySelector('.sign-up-box input[name=password]').insertAdjacentHTML('afterend', inputPasswordHtml)
-        document.querySelector('.sign-up-box input[name=password]').insertAdjacentHTML('afterend', '<img class="eyes" src="./images/eyes_on.png" alt="" />')
+        document.querySelector('.sign-up-box input[name=password]').insertAdjacentHTML('afterend', '<img class="eyes" src="/images/eyes_on.png" alt="" />')
 
         document.querySelectorAll('.eyes').forEach((el, i) => {
             el.addEventListener('click', () =>  {
@@ -1067,8 +1071,8 @@ function signUp(self) {
 
 function signInUp(self) {
     let userEmail = document.querySelector('input[name=email]').value;
-    let userPassword = (!!document.querySelector('input[name=password]') !== false) ? document.querySelector('input[name=password]').value : ''
-    let user_rePassword = (!!document.querySelector('input[name=re_password]') !== false) ? document.querySelector('input[name=re_password]').value : ''
+    let userPassword = document.querySelector('input[name=password]')?.value || ''
+    let user_rePassword = document.querySelector('input[name=re_password]')?.value || ''
     let selfTextContent = self.textContent.trim()
     const authProviders = {
         google: googleProvider,
@@ -1078,23 +1082,28 @@ function signInUp(self) {
 
     // SNS 간편 로그인
     if (provider) {
+        // 리다이렉트 페이지 방식
         // signInWithRedirect(dbAuth, googleProvider)
         // getRedirectResult(dbAuth).then((result) => {
         //     if (result) {
-        //         const user = result.user;
+        //         const user = result.user
         //     }
         // }).catch((error) => {
-        // });
+        // })
+
+        // 팝업창 방식
         signInWithPopup(dbAuth, provider).then(() => {
             reload()
         }).catch((error) => {
             windowPopup(error.message)
         })
     }
+
     if (selfTextContent === 'kakao') {
         window.Kakao.Auth.authorize()
     }
 
+    // 일반 로그인
     if (selfTextContent === '로그인하기') {
         if (!userEmail) {
             windowPopup('이메일을(를) 입력해주세요.')
@@ -1124,24 +1133,26 @@ function signInUp(self) {
             })
         })
     } else if (selfTextContent === '수정하기') {
+        if (!userPassword || !user_rePassword) {
+            windowPopup('비밀번호를 입력해주세요.')
+            return false
+        }
+
+        if (userPassword.length < 6) {
+            windowPopup('비밀번호는 6자 이상이어야 합니다.')
+            return false
+        }
+
+        if (userPassword !== user_rePassword) {
+            windowPopup('비밀번호가 일치하지 않습니다.')
+            return false
+        }
+
         updatePassword(dbAuth.currentUser, userPassword).then(() => {
             windowPopup('정상적으로 회원 정보가 수정되었습니다.')
             windowPopupOk()
         }).catch((error) => {
-            if (error.code === 'auth/weak-password') {
-                windowPopup('비밀번호는 6자 이상이어야 합니다.')
-                return
-            }
-
-            if (!userPassword || !user_rePassword) {
-                windowPopup('비밀번호를 입력해주세요.')
-                return
-            } else if (userPassword !== user_rePassword) {
-                windowPopup('비밀번호가 일치하지 않습니다.')
-                return
-            }
-
-            windowPopup('회원 정보 수정에 실패하였습니다, 잠시 후 다시 시도해주세요.')
+            windowPopup('회원 정보 수정에 실패하였습니다. 잠시 후 다시 시도해주세요.')
         })
     } else if (selfTextContent === '가입하기') {
         let userName = document.querySelector('input[name=name]').value
@@ -1171,9 +1182,6 @@ function signInUp(self) {
                 signOut(dbAuth) // createUserWithEmailAndPassword는 자동 로그인되기 때문에 메일 인증을 위해 로그아웃
                 windowPopup('본인확인을 위해서 가입하신 이메일로 전송된 인증 메일의 링크를 클릭하여 인증을 완료해주세요.<br>인증 후 로그인이 가능합니다.')
                 windowPopupOk()
-                document.querySelector('#windowPopupOk').addEventListener('click', () => {
-                    reload()
-                })
             })
         }).catch(error => {
             if (error.code === 'auth/weak-password') {
@@ -1211,7 +1219,7 @@ function passwordReset() {
     document.querySelector('.sns-sign-in-box').remove()
     document.querySelector('.sign-info-box').remove()
     document.querySelector('input[name=password]').remove()
-    document.querySelector('input[name=email]').placeholder = '가입시 등록한 이메일을 입력해 주세요.'
+    document.querySelector('input[name=email]').placeholder = '가입하신 이메일을 입력해 주세요.'
     document.querySelector('input[name=email]').value = ''
 }
 
