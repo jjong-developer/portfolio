@@ -14,8 +14,8 @@ import {
     sendPasswordResetEmail,
     signInWithRedirect,
     signInWithPopup,
+    signInWithCustomToken,
     googleProvider,
-    facebookProvider,
     getRedirectResult,
     setPersistence,
     browserSessionPersistence,
@@ -53,7 +53,7 @@ const tabMenuCategoryList = document.querySelectorAll('.tab-menu-categories li')
 const tabMenuContent = document.querySelectorAll('.tab-menu-content')
 const resumeFilePath = 'resume/이력서_김종욱.pdf'
 let isUser // 로그인 여/부 상태값을 받기 위함 -> html 파일내에서 생성한 태그는 사용안하는 용도이고 script내에서 동적으로 추가한 html만 사용하기 위함
-let superAdmin = ['jongwook2.kim@gmail.com'] // 관리자 권한 이메일 설정
+let superAdmin = ['jongwook2.kim@gmail.com'] // 관리자 권한 이메일 부여
 let isSuperAdmin, isBg = false
 let isCategories, isType
 let fileUploadRef
@@ -233,11 +233,11 @@ const portfolioSite = () => {
             <div class="modal-date-box-wrap">
                 <div class="modal-date-box">
                     <label for="startPeriod">시작 기간: </label>
-                    <input id="startPeriod" type="date" name="startPeriod" max="${todayDate}" pattern="\\d{4}/\\d{2}/\\d{2}" />
+                    <input id="startPeriod" type="date" name="startPeriod" onkeydown="return false" max="${todayDate}" pattern="\\d{4}/\\d{2}/\\d{2}" />
                 </div>
                 <div class="modal-date-box">
                     <label for="endPeriod">종료 기간: </label>
-                    <input id="endPeriod" type="date" name="endPeriod" max="${todayDate}" pattern="\\d{4}/\\d{2}/\\d{2}" />
+                    <input id="endPeriod" type="date" name="endPeriod" onkeydown="return false" max="${todayDate}" pattern="\\d{4}/\\d{2}/\\d{2}" />
                 </div>
             </div>
             <div class="modal-select-box-wrap">
@@ -470,7 +470,7 @@ menuList.forEach((el) => {
  * 로그인 인증 상태
  */
 onAuthStateChanged(dbAuth, (user) => {
-    console.log(user)
+    // console.log(user)
     isUser = user
 
     if (user) {
@@ -571,14 +571,6 @@ onAuthStateChanged(dbAuth, (user) => {
                             <button class="sns-sign-in-info" type="button" onclick="signInUp(this)" title="구글 로그인">
                                 <img src="/images/sns/google_icon.png" alt="구글 로그인" />
                                 <span>google</span>
-                            </button>
-                            <button class="sns-sign-in-info" type="button" onclick="signInUp(this)" title="페이스북 로그인">
-                                <img src="/images/sns/facebook_icon.png" alt="페이스북 로그인" />
-                                <span>facebook</span>
-                            </button>
-                            <button class="sns-sign-in-info" type="button" onclick="signInUp(this)" title="카카오 로그인">
-                                <img src="/images/sns/kakao_icon.png" alt="카카오 로그인" />
-                                <span>kakao</span>
                             </button>
                         </div>
                     </div>
@@ -1076,11 +1068,10 @@ function signInUp(self) {
     let selfTextContent = self.textContent.trim()
     const authProviders = {
         google: googleProvider,
-        facebook: facebookProvider,
     }
     const provider = authProviders[selfTextContent]
 
-    // SNS 간편 로그인
+    // SNS 로그인 (구글)
     if (provider) {
         // 리다이렉트 페이지 방식
         // signInWithRedirect(dbAuth, googleProvider)
@@ -1097,10 +1088,6 @@ function signInUp(self) {
         }).catch((error) => {
             windowPopup(error.message)
         })
-    }
-
-    if (selfTextContent === 'kakao') {
-        window.Kakao.Auth.authorize()
     }
 
     // 일반 로그인
@@ -1242,27 +1229,31 @@ tabMenuCategoryList.forEach((el, index) => {
 })
 
 /**
- * 사용 경력 기술 소개
+ * 사용 기술 소개
  */
 skillBox.forEach((el, index) => {
     let dataSkill = el.getAttribute('data-skill')
-    let skillTemplate = '' +
-        '<div class="skill-view skill-view-'+ index +'">' +
-            '<span>' + (dataSkill !== null ? dataSkill : "") + '</span>' +
-        '</div>'
 
-    el.addEventListener('mouseenter', () => {
-        el.insertAdjacentHTML('afterbegin', skillTemplate)
+    if (dataSkill !== null) {
+        let skillTemplate = '' +
+            '<div class="skill-view skill-view-'+ index +'">' +
+                // '<span>' + (dataSkill !== null ? dataSkill : "") + '</span>' +
+                '<span>' + dataSkill + '</span>' +
+            '</div>'
 
-        el.animate([
-            { opacity: 0 },
-            { opacity: 1 }
-        ], 140)
-    })
+        el.addEventListener('mouseenter', () => {
+            el.insertAdjacentHTML('afterbegin', skillTemplate)
 
-    el.addEventListener('mouseleave', () => {
-        document.querySelector('.skill-view-'+index).remove()
-    })
+            el.animate([
+                { opacity: 0 },
+                { opacity: 1 }
+            ], 140)
+        })
+
+        el.addEventListener('mouseleave', () => {
+            document.querySelector('.skill-view-'+index).remove()
+        })
+    }
 })
 
 new Swiper('.swiper-tool-container.swiper-container', {

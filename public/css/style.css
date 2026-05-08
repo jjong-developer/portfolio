@@ -544,7 +544,7 @@ img {max-width: 100%;}
     text-align: center;
 }
 .sns-sign-in-box hr:after {
-    content: "SNS 간편 로그인히기";
+    content: "SNS 간편 로그인하기";
     position: relative;
     top: -12px;
     padding: 0 20px;
@@ -727,23 +727,41 @@ img {max-width: 100%;}
     border-bottom: 1px solid #666666;
 }
 .tab-menu {
+    position: relative;
     margin: 0 0 30px 0;
 }
 .tab-menu ul {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
+    padding: 0;
 }
 .tab-menu ul li {
+    position: relative;
+    padding: 0 0 5px 0;
     color: #666666;
-    font-weight: 500;
     font-size: 18px;
+    transition: color 0.3s ease;
+    font-weight: 500;
     cursor: pointer;
 }
+.tab-menu ul li::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background-color: #3e54d3;
+    transition: width 0.3s ease, left 0.3s ease;
+}
 .tab-menu ul li.active {
-    border-bottom: 3px solid #3e54d3;
-    padding: 0 0 2px 0;
     color: #ffffff;
+}
+.tab-menu ul li.active::after {
+    width: 100%;
 }
 .tab-menu-content {
     display: none;
